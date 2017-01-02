@@ -12,6 +12,16 @@ module.exports = function(app) {
 		});
 	});
 
+	app.get('/login', function(req, res) {
+		// Checks the model collection and returns all of them`
+		User.find(function(err, users) {
+			// returns all people in JSON format
+			res.send(users);
+		});
+	});
+
+
+
 	// Example POST route
 	app.post('/users', function (req, res) {
 		User.create({

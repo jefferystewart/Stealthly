@@ -1,18 +1,34 @@
 // Dependencie
-var express = require('express');
-var app = express();
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const options = require('./config/options');
+const passport = require('passport');
+
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+passport.use(new GoogleStrategy({
+    clientID: options.GOOGLE_CLIENT_ID,
+    clientSecret: options.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://www.example.com/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
 // Configs
-var db = require('./config/db');
+const db = require('./config/db');
 
 // Connect to the DB
 mongoose.connect(db.url);
-
 app.use(express.static(__dirname + '/public'));
 
 // log every request to the console
