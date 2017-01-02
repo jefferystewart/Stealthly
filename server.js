@@ -9,18 +9,50 @@ const io = require('socket.io')(http);
 const options = require('./config/options');
 const passport = require('passport');
 
-
+const User = require('./app/models/user');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function (err, user) {
+		console.log(user);
+    done(err, user);
+  });
+});
+
 
 passport.use(new GoogleStrategy({
     clientID: options.GOOGLE_CLIENT_ID,
     clientSecret: options.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://www.example.com/auth/google/callback"
+    callbackURL: options.CALLBACK_URL
   },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
+  function(accessToken, refreshToken, profile, done) {
+    User.findOne({ 'google.id' : profile.id }, function(err, user) {
+      if (err){
+				return done(err);
+			}
+      if (user) {
+				console.log(user);
+        return done(null, user);
+      } else {
+        var newUser = new User();
+        newUser.google.id = profile.id;
+        newUser.google.token = accessToken;
+        newUser.google.name  = profile.displayName;
+        newUser.google.email = profile.emails[0].value;
+        newUser.save(function(err) {
+          if (err)
+              throw err;
+          return done(null, newUser);
+        });
+      }
+		});
   }
 ));
 
@@ -41,7 +73,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Express Routes
-require('./app/routes/api')(app);
+require('./app/routes/api')(app, passport);
 require('./app/routes/routes')(app);
 
 io.on('connection', function(socket){

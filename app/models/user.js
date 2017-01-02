@@ -3,9 +3,12 @@ Schema = mongoose.Schema;
 
 // Model Schema
 var UserSchema = new Schema ({
-	username : {
-		type: String
-	},
+	google : {
+		id: Number,
+		token: String,
+		name: String,
+		email: String
+	}
 });
 
 module.exports = mongoose.model('Model', UserSchema);
