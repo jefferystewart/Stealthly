@@ -15,6 +15,10 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 app.use(passport.initialize());
 app.use(passport.session());
 
+// User.find({}, (err, users) => {
+// 	console.log(users);
+// });
+
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
