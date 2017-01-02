@@ -5,6 +5,6 @@ module.exports = function(app) {
 	// Wildcard route serving static html page
 	app.get('/', function(req, res) {
 		// Displaying an already made view
-		res.sendfile('public/views/index.html');
+		res.sendfile('src/public/views/index.html');
 	});
 };

@@ -1,7 +1,6 @@
 import $ from 'jquery';
 
 export const postSignature = (key, hash, success, error) => {
-  // debugger
   $.ajax({
     method: "POST",
     beforeSend: function(request) {

@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux';
 import React from 'react';
-import FormContainer from './form_container';
+import ChatApp from './chat_app';
 
 const Root = ({ store }) => {
   return (
     <Provider store={store}>
-      <FormContainer/>
+      <ChatApp/>
     </Provider>
   )
 };

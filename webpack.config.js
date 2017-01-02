@@ -4,7 +4,7 @@ console.log(__dirname);
 
 module.exports = {
   context: __dirname,
-  entry: __dirname + "/src/frontend/project.jsx",
+  entry: __dirname + "/src/frontend/app.jsx",
   output: {
     path: path.join(__dirname, 'src', 'public'),
     filename: "bundle.js"

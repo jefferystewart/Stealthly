@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import signature from './signature_reducer';
+import session from './session_reducer';
 
 
-const RootReducer = combineReducers({signature});
+const RootReducer = combineReducers({session});
 
 export default RootReducer;
