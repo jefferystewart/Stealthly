@@ -5,7 +5,7 @@ var myApp = angular.module('myApp', []);
 myApp.controller('appCtrl', function appCtrl($scope, $http) {
 	$scope.formData = {};
 
-	$http.get('/models')
+	$http.get('/users')
 		.success(function(data) {
 			$scope.models = data;
 			console.log(data);

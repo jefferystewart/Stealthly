@@ -1,45 +1,42 @@
 // Module for API Routes (serving JSON)
 module.exports = function(app) {
 	var mongoose = require('mongoose'),
-		Model = require('../models/model')
+		User = require('../models/user');
 
 	// Example API route
-	app.get('/models', function(req, res) {
+	app.get('/users', function(req, res) {
 		// Checks the model collection and returns all of them`
-		Model.find(function(err, models) {
-
+		User.find(function(err, users) {
 			// returns all people in JSON format
-			res.send(models);
+			res.send(users);
 		});
 	});
 
 	// Example POST route
-	app.post('/models', function (req, res) {
-		Model.create({
-			name : req.body.name // Bound using Angular
-		}, function(err, model) {
+	app.post('/users', function (req, res) {
+		User.create({
+			username : req.body.username // Bound using Angular
+		}, function(err, user) {
 			if(err) {
 				res.send(err);
 			}
-
-			Model.find(function(err, models) {
-				res.send(models);
+			User.find(function(err, users) {
+				res.send(users);
 			});
 		});
 	});
 
 	// Example DELETE route
-	app.delete('/models/:model_id', function (req, res) {
-		Model.remove({
-			_id: req.params.model_id
+	app.delete('/users/:user_id', function (req, res) {
+		User.remove({
+			_id: req.params.user_id
 		}, function(err, model) {
 			if(err) {
 				res.send(err);
 			}
-
-			Model.find(function(err, models) {
+			User.find(function(err, models) {
 				res.send(models);
 			});
 		});
 	});
-}
+};
