@@ -65,7 +65,7 @@ const db = require('./config/db');
 
 // Connect to the DB
 mongoose.connect(db.url);
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/src/public'));
 
 // log every request to the console
 app.use(morgan('dev'));
