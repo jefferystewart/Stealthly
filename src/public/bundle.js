@@ -41942,6 +41942,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _jquery = __webpack_require__(314);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41967,40 +41971,31 @@
 	  _createClass(Room, [{
 	    key: "componentDidMount",
 	    value: function componentDidMount() {
-	      var _this2 = this;
-	
 	      if (this.props.code && this.props.code.length > 0) {
-	        (function () {
-	          var socket = io("/" + _this2.props.code);
-	          socket.on('chat message', function (msg, nickname) {
-	            console.log(msg);
-	            var newLog = _this2.state.log;
-	            newLog.push({ user: nickname, msg: msg });
-	            socket.emit('log chat message', newLog);
-	            _this2.setState({ log: newLog });
-	          });
-	          _this2.setState({ socket: socket });
-	        })();
+	        var socket = io("/" + this.props.code);
+	        this._setupSocket(socket).bind(this);
 	      }
 	    }
 	  }, {
 	    key: "componentWillReceiveProps",
 	    value: function componentWillReceiveProps(nextProps) {
-	      var _this3 = this;
-	
 	      if (nextProps.code && nextProps.code.length > 0) {
-	        (function () {
-	          var socket = io("/" + nextProps.code);
-	          socket.on('chat message', function (msg, nickname) {
-	            console.log(msg);
-	            var newLog = _this3.state.log;
-	            newLog.push({ user: nickname, msg: msg });
-	            socket.emit('log chat message', newLog);
-	            _this3.setState({ log: newLog });
-	          });
-	          _this3.setState({ socket: socket });
-	        })();
+	        var socket = io("/" + nextProps.code);
+	        this._setupSocket(socket);
 	      }
+	    }
+	  }, {
+	    key: "_setupSocket",
+	    value: function _setupSocket(socket) {
+	      var _this2 = this;
+	
+	      socket.on('chat message', function (msg, nickname) {
+	        var newLog = _this2.state.log;
+	        newLog.push({ user: nickname, msg: msg });
+	        socket.emit('log chat message', newLog);
+	        _this2.setState({ log: newLog });
+	      });
+	      this.setState({ socket: socket });
 	    }
 	  }, {
 	    key: "handleChange",
@@ -42030,7 +42025,6 @@
 	          )
 	        );
 	      } else {
-	
 	        return _react2.default.createElement(
 	          "div",
 	          { className: "room" },

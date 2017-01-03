@@ -1,4 +1,5 @@
 import React from "react";
+import $ from "jquery";
 
 class Room extends React.Component {
 
@@ -12,29 +13,25 @@ class Room extends React.Component {
   componentDidMount(){
     if (this.props.code && this.props.code.length > 0){
       const socket = io(`/${this.props.code}`);
-      socket.on('chat message', (msg, nickname) => {
-        console.log(msg);
-        const newLog = this.state.log;
-        newLog.push({user: nickname, msg: msg});
-        socket.emit('log chat message', newLog);
-        this.setState({log:newLog});
-      });
-      this.setState({ socket: socket });
+      this._setupSocket(socket).bind(this);
     }
   }
 
   componentWillReceiveProps(nextProps){
     if (nextProps.code && nextProps.code.length > 0){
       const socket = io(`/${nextProps.code}`);
-      socket.on('chat message', (msg, nickname) => {
-        console.log(msg);
-        const newLog = this.state.log;
-        newLog.push({user: nickname, msg: msg});
-        socket.emit('log chat message', newLog);
-        this.setState({log:newLog});
-      });
-      this.setState({ socket: socket });
+      this._setupSocket(socket);
     }
+  }
+
+  _setupSocket(socket) {
+    socket.on('chat message', (msg, nickname) => {
+      const newLog = this.state.log;
+      newLog.push({user: nickname, msg: msg});
+      socket.emit('log chat message', newLog);
+      this.setState({log:newLog});
+    });
+    this.setState({ socket: socket });
   }
 
   handleChange(event) {
@@ -57,7 +54,6 @@ class Room extends React.Component {
         </div>
       );
     }else {
-
       return (
         <div className="room">
           <h1> Room Code: { this.props.code }</h1>
