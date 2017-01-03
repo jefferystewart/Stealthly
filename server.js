@@ -6,8 +6,6 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const options = require('./config/options');
-const passport = require('passport');
 
 // Configs
 const db = require('./config/db');
