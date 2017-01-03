@@ -5,7 +5,7 @@
   "main": "server.js",
   "author": "John",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js"
   },
   "dependencies": {
     "babel": "^6.5.2",
