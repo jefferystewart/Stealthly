@@ -21527,7 +21527,7 @@
 	    { store: store },
 	    _react2.default.createElement(
 	      _reactRouter.Router,
-	      { history: _reactRouter.hashHistory },
+	      { history: _reactRouter.browserHistory },
 	      _react2.default.createElement(
 	        _reactRouter.Route,
 	        { path: '/' },
@@ -26583,6 +26583,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(317);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26612,11 +26614,17 @@
 	    key: "generateCode",
 	    value: function generateCode() {
 	      if (this.state.nickname.length > 0) {
-	        this.props.generateCode(this.state.nickname);
+	        this.props.generateCode(this.state.nickname, this.redirectToChatRoom.bind(this));
 	        this.setState({ nicknameError: false });
 	      } else {
 	        this.setState({ nicknameError: true });
 	      }
+	    }
+	  }, {
+	    key: "redirectToChatRoom",
+	    value: function redirectToChatRoom(code) {
+	      console.log();
+	      _reactRouter.browserHistory.push(code);
 	    }
 	  }, {
 	    key: "render",
@@ -26693,11 +26701,14 @@
 	      // const success = code => dispatch(receiveCode(code));
 	      var success = function success(code) {
 	        dispatch((0, _room.receiveCode)(code));
+	        // debugger
+	        if (action.callback) {
+	          action.callback(code);
+	        }
 	      };
 	      var error = function error(err) {
 	        dispatch((0, _room.receiveRoomError)(err));
 	      };
-	
 	      switch (action.type) {
 	        case _room.GENERATE_CODE:
 	          (0, _room_api.generateCode)(action.host, success, error);
@@ -26728,10 +26739,11 @@
 	var RECEIVE_CODE = exports.RECEIVE_CODE = 'RECEIVE_CODE';
 	var RECEIVE_ROOM_ERROR = exports.RECEIVE_ROOM_ERROR = 'RECEIVE_ROOM_ERROR';
 	
-	var generateCode = exports.generateCode = function generateCode(host) {
+	var generateCode = exports.generateCode = function generateCode(host, callback) {
 	  return {
 	    type: GENERATE_CODE,
-	    host: host
+	    host: host,
+	    callback: callback
 	  };
 	};
 	
@@ -37085,8 +37097,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    generateCode: function generateCode(host) {
-	      return dispatch((0, _room.generateCode)(host));
+	    generateCode: function generateCode(host, callback) {
+	      return dispatch((0, _room.generateCode)(host, callback));
 	    }
 	  };
 	};

@@ -1,4 +1,5 @@
 import React from "react";
+import { browserHistory } from 'react-router';
 
 class Menu extends React.Component {
 
@@ -13,11 +14,16 @@ class Menu extends React.Component {
 
   generateCode() {
     if (this.state.nickname.length > 0) {
-      this.props.generateCode(this.state.nickname);
+      this.props.generateCode(this.state.nickname, this.redirectToChatRoom.bind(this));
       this.setState({ nicknameError:false });
     } else {
       this.setState({ nicknameError:true });
     }
+  }
+
+  redirectToChatRoom(code){
+    console.log();
+    browserHistory.push(code)
   }
 
   render() {

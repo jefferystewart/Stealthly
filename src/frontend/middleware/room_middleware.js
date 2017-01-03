@@ -5,11 +5,14 @@ const roomMiddleware = ({ getState, dispatch}) => next => action => {
   // const success = code => dispatch(receiveCode(code));
   const success = code => {
     dispatch(receiveCode(code));
+    // debugger
+    if (action.callback){
+      action.callback(code);
+    }
   };
   const error = err => {
     dispatch(receiveRoomError(err));
   };
-
   switch (action.type) {
     case GENERATE_CODE:
       generateCode(action.host, success, error);

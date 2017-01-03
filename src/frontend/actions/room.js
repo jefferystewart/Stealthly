@@ -3,9 +3,10 @@ export const GET_ROOM = 'GET_ROOM';
 export const RECEIVE_CODE = 'RECEIVE_CODE';
 export const RECEIVE_ROOM_ERROR = 'RECEIVE_ROOM_ERROR';
 
-export const generateCode = (host) => ({
+export const generateCode = (host, callback) => ({
   type: GENERATE_CODE,
-  host: host
+  host: host,
+  callback: callback
 });
 
 export const receiveCode = (code) => ({

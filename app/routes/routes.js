@@ -4,7 +4,7 @@
 module.exports = function(app) {
 	const Room = require('../models/room');
 	// Wildcard route serving static html page
-	app.get('/', function(req, res) {
+	app.get('/*', function(req, res) {
 		// Displaying an already made view
 		res.sendfile('src/public/views/index.html');
 
