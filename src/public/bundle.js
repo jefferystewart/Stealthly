@@ -26601,7 +26601,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 	
-	    _this.state = { nickname: "", nicknameError: false };
+	    _this.state = { nickname: "", nicknameError: false, code: "", codeError: false };
 	    return _this;
 	  }
 	
@@ -26609,6 +26609,11 @@
 	    key: "updateNickname",
 	    value: function updateNickname(e) {
 	      this.setState({ nickname: e.currentTarget.value });
+	    }
+	  }, {
+	    key: "updateCode",
+	    value: function updateCode(e) {
+	      this.setState({ code: e.currentTarget.value });
 	    }
 	  }, {
 	    key: "generateCode",
@@ -26623,53 +26628,70 @@
 	  }, {
 	    key: "redirectToChatRoom",
 	    value: function redirectToChatRoom(code) {
-	      console.log();
 	      _reactRouter.browserHistory.push(code);
+	    }
+	  }, {
+	    key: "joinChatRoom",
+	    value: function joinChatRoom(e) {
+	      if (this.state.code.length > 0 && this.state.code.length <= 4) {
+	        _reactRouter.browserHistory.push(this.state.code);
+	        this.setState({ codeError: false });
+	      } else {
+	        this.setState({ codeError: true });
+	      }
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var nicknameError = void 0;
-	
+	      var nicknameError = void 0,
+	          codeError = void 0;
 	      if (this.state.nicknameError) {
 	        nicknameError = _react2.default.createElement(
 	          "p",
 	          null,
-	          " PLEASE PICK A NICKNAME! "
+	          " Please pick a name! "
+	        );
+	      }
+	      if (this.state.codeError) {
+	        codeError = _react2.default.createElement(
+	          "p",
+	          null,
+	          " Not an active room! "
 	        );
 	      }
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "menu" },
 	        _react2.default.createElement(
-	          "h3",
+	          "h2",
 	          null,
-	          " Menu "
+	          "Room Code"
 	        ),
+	        codeError,
+	        _react2.default.createElement("input", { onChange: this.updateCode.bind(this) }),
 	        _react2.default.createElement(
-	          "h1",
+	          "h2",
 	          null,
-	          "Nickname"
+	          "Name"
 	        ),
 	        nicknameError,
 	        _react2.default.createElement("input", { onChange: this.updateNickname.bind(this) }),
 	        _react2.default.createElement(
 	          "button",
 	          { onClick: this.generateCode.bind(this) },
-	          "Generate Code"
+	          "Create Room"
+	        ),
+	        _react2.default.createElement(
+	          "button",
+	          { onClick: this.joinChatRoom.bind(this) },
+	          "Join Room"
 	        ),
 	        _react2.default.createElement(
 	          "h1",
 	          null,
 	          " ",
 	          this.props.code
-	        ),
-	        _react2.default.createElement(
-	          "p",
-	          null,
-	          "or Enter code:"
-	        ),
-	        _react2.default.createElement("input", null)
+	        )
 	      );
 	    }
 	  }]);
@@ -41932,6 +41954,13 @@
 	  _createClass(Room, [{
 	    key: "componentDidMount",
 	    value: function componentDidMount() {}
+	  }, {
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (nextProps.code.length > 0) {
+	        var socket = io("/" + nextProps.code);
+	      }
+	    }
 	  }, {
 	    key: "render",
 	    value: function render() {

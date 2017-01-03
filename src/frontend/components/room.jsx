@@ -7,7 +7,12 @@ class Room extends React.Component {
   }
 
   componentDidMount(){
+  }
 
+  componentWillReceiveProps(nextProps){
+    if (nextProps.code.length > 0){
+      var socket = io(`/${nextProps.code}`);
+    }
   }
   render(){
 
