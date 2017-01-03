@@ -1,6 +1,6 @@
 import { applyMiddleware } from 'redux';
-import SignatureMiddleware from './signature_middleware';
+import RoomMiddleware from './room_middleware';
 
-const RootMiddleware = applyMiddleware(SignatureMiddleware);
+const RootMiddleware = applyMiddleware(RoomMiddleware);
 
 export default RootMiddleware;

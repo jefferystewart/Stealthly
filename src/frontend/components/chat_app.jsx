@@ -1,20 +1,22 @@
 import React from "react";
 import UserList from "./user_list";
+import MenuContainer from "./menu_container";
 
 class ChatApp extends React.Component {
 
   constructor(props){
     super(props);
+    this.state = {roomCode:"", users:[]};
   }
 
   componentDidMount(){
-    var socket = io();
+
   }
 
   render(){
     console.log('ok');
     return (
-      <h1></h1>
+      <MenuContainer/>
     );
   }
 }

@@ -77,7 +77,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Express Routes
-require('./app/routes/api')(app, passport);
+require('./app/routes/api')(app);
 require('./app/routes/routes')(app);
 
 io.on('connection', function(socket){
