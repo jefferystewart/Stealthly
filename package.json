@@ -4,7 +4,9 @@
   "description": "Chatt app!",
   "main": "server.js",
   "author": "John",
-  "scripts": {},
+  "scripts": {
+    "start": "node server.js",
+  },
   "dependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.17.0",
