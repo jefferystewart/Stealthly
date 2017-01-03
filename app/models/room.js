@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const randomstring = require("randomstring");
-
+const stringOptions = {
+	length: 4,
+	charset: 'alphabetic',
+	capitalization: 'uppercase'
+};
 
 // Model Schema
 var RoomSchema = new Schema ({
@@ -10,24 +14,21 @@ var RoomSchema = new Schema ({
 });
 
 RoomSchema.statics.generateCode = function(cb){
-	let randomString = randomstring.generate(4);
-	let searching = true;
+	let randomString = randomstring.generate(stringOptions);
 
-	const searchFunc = function (err, room){
-		console.log(room);
-		console.log(randomString);
-		if (room.length){
-			randomString = randomstring.generate(4);
-		} else {
-			searching = false;
+	const countFunc = function (err, count){
+		console.log('counting');
+    if(count > 0){
+			let randomString = randomstring.generate(stringOptions);
+			this.count({code: randomString}, countFunc);
+    } else {
+			this.create({ code: randomString, users:[] }, function (err, small) {
+  			if (err) return handleError(err);
+				cb(randomString);
+			});
 		}
 	}.bind(this);
-		this.find({code: randomString}, function(err, room){
-			console.log(randomString);
-			console.log(room);
-		});
-
-		return randomString;
+	this.count({code: randomString}, countFunc);
 };
 
 

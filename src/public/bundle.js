@@ -23791,7 +23791,6 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      console.log('ok');
 	      return _react2.default.createElement(_menu_container2.default, null);
 	    }
 	  }]);
@@ -26695,20 +26694,42 @@
 	var Menu = function (_React$Component) {
 	  _inherits(Menu, _React$Component);
 	
-	  function Menu() {
+	  function Menu(props) {
 	    _classCallCheck(this, Menu);
 	
-	    return _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+	
+	    _this.state = { nickname: "", nicknameError: false };
+	    return _this;
 	  }
 	
 	  _createClass(Menu, [{
+	    key: "updateNickname",
+	    value: function updateNickname(e) {
+	      this.setState({ nickname: e.currentTarget.value });
+	    }
+	  }, {
 	    key: "generateCode",
 	    value: function generateCode() {
-	      this.props.generateCode();
+	      if (this.state.nickname.length > 0) {
+	        this.props.generateCode();
+	      } else {
+	        this.setState({ nicknameError: true });
+	      }
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
+	
+	      var nicknameError = void 0;
+	
+	      if (this.state.nicknameError) {
+	        nicknameError = _react2.default.createElement(
+	          "p",
+	          null,
+	          " PLEASE PICK A NICKNAME! "
+	        );
+	      }
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "menu" },
@@ -26718,9 +26739,22 @@
 	          " Menu "
 	        ),
 	        _react2.default.createElement(
+	          "h1",
+	          null,
+	          "Nickname"
+	        ),
+	        nicknameError,
+	        _react2.default.createElement("input", { onChange: this.updateNickname.bind(this) }),
+	        _react2.default.createElement(
 	          "button",
 	          { onClick: this.generateCode.bind(this) },
 	          "Generate Code"
+	        ),
+	        _react2.default.createElement(
+	          "h1",
+	          null,
+	          " ",
+	          this.props.code
 	        ),
 	        _react2.default.createElement(
 	          "p",
@@ -26758,11 +26792,9 @@
 	    return function (action) {
 	      // const success = code => dispatch(receiveCode(code));
 	      var success = function success(code) {
-	        debugger;
 	        dispatch((0, _room.receiveCode)(code));
 	      };
 	      var error = function error(err) {
-	        debugger;
 	        console.log(err);
 	      };
 	
@@ -37084,7 +37116,6 @@
 	
 	  switch (action.type) {
 	    case _room.RECEIVE_CODE:
-	      console.log(action.code);
 	      return { code: action.code };
 	    default:
 	      return state;
@@ -37113,6 +37144,13 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var room = _ref.room;
+	  return {
+	    code: room.code
+	  };
+	};
+	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    generateCode: function generateCode() {
@@ -37121,7 +37159,7 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(_menu2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_menu2.default);
 
 /***/ }
 /******/ ]);

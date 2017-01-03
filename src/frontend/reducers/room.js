@@ -8,7 +8,6 @@ const defaultState = {
 const room = (state = defaultState, action) => {
   switch (action.type) {
     case RECEIVE_CODE:
-      console.log(action.code);
       return { code:action.code };
     default:
       return state;

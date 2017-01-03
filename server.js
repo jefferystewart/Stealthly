@@ -9,57 +9,6 @@ const io = require('socket.io')(http);
 const options = require('./config/options');
 const passport = require('passport');
 
-const User = require('./app/models/user');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-// User.find({}, (err, users) => {
-// 	console.log(users);
-// });
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function (err, user) {
-		console.log(user);
-    done(err, user);
-  });
-});
-
-
-passport.use(new GoogleStrategy({
-    clientID: options.GOOGLE_CLIENT_ID,
-    clientSecret: options.GOOGLE_CLIENT_SECRET,
-    callbackURL: options.CALLBACK_URL
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOne({ 'google.id' : profile.id }, function(err, user) {
-      if (err){
-				return done(err);
-			}
-      if (user) {
-				console.log(user);
-        return done(null, user);
-      } else {
-        var newUser = new User();
-        newUser.google.id = profile.id;
-        newUser.google.token = accessToken;
-        newUser.google.name  = profile.displayName;
-        newUser.google.email = profile.emails[0].value;
-        newUser.save(function(err) {
-          if (err)
-              throw err;
-          return done(null, newUser);
-        });
-      }
-		});
-  }
-));
-
 // Configs
 const db = require('./config/db');
 

@@ -10,11 +10,9 @@ class ChatApp extends React.Component {
   }
 
   componentDidMount(){
-
   }
 
   render(){
-    console.log('ok');
     return (
       <MenuContainer/>
     );
