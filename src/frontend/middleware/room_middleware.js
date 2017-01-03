@@ -1,5 +1,5 @@
-import { GENERATE_CODE, receiveCode } from '../actions/room';
-import { generateCode } from '../util/room_api';
+import { GET_ROOM, GENERATE_CODE, receiveCode, receiveRoomError } from '../actions/room';
+import { generateCode, getRoom } from '../util/room_api';
 
 const roomMiddleware = ({ getState, dispatch}) => next => action => {
   // const success = code => dispatch(receiveCode(code));
@@ -7,12 +7,15 @@ const roomMiddleware = ({ getState, dispatch}) => next => action => {
     dispatch(receiveCode(code));
   };
   const error = err => {
-    console.log(err);
+    dispatch(receiveRoomError(err));
   };
 
   switch (action.type) {
     case GENERATE_CODE:
-      generateCode(success, error);
+      generateCode(action.host, success, error);
+      return next(action);
+    case GET_ROOM:
+      getRoom(action.code, success, error);
       return next(action);
     default:
       return next(action);

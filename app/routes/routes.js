@@ -8,11 +8,11 @@ module.exports = function(app) {
 		// Displaying an already made view
 		res.sendfile('src/public/views/index.html');
 
-		Room.find({}, function(err, rooms){
-		  console.log(rooms);
-			rooms.forEach((room)=>{
-				room.remove();
-			});
-		});
+		// Room.find({}, function(err, rooms){
+		//   console.log(rooms);
+		// 	rooms.forEach((room)=>{
+		// 		room.remove();
+		// 	});
+		// });
 	});
 };

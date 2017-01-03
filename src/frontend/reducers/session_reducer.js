@@ -2,7 +2,7 @@ import { RECEIVE_USER } from '../actions/session';
 import merge from 'lodash/merge';
 
 const defaultState = {
-  users:null
+  user:null
 };
 
 const session = (state = defaultState, action) => {

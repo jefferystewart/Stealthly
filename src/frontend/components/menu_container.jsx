@@ -7,7 +7,7 @@ const mapStateToProps = ({ room }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  generateCode: () => dispatch(generateCode())
+  generateCode: (host) => dispatch(generateCode(host))
 });
 
 

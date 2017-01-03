@@ -2,26 +2,25 @@ import React from "react";
 
 class Menu extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = { nickname: "", nicknameError:false };
   }
 
-  updateNickname(e){
+  updateNickname(e) {
     this.setState({ nickname:e.currentTarget.value });
   }
 
-
-  generateCode(){
-    if (this.state.nickname.length > 0){
-      this.props.generateCode();
+  generateCode() {
+    if (this.state.nickname.length > 0) {
+      this.props.generateCode(this.state.nickname);
+      this.setState({ nicknameError:false });
     } else {
       this.setState({ nicknameError:true });
     }
   }
 
-  render(){
-
+  render() {
     let nicknameError;
 
     if (this.state.nicknameError){
