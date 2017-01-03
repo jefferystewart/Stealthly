@@ -26,11 +26,13 @@ class Menu extends React.Component {
   }
 
   redirectToChatRoom(code) {
+    this.props.receiveUser(this.state.nickname);
     browserHistory.push(code);
   }
 
   joinChatRoom(e){
     if (this.state.code.length > 0 && this.state.code.length <= 4){
+      this.props.receiveUser(this.state.nickname);
       browserHistory.push(this.state.code);
       this.setState({ codeError:false });
     } else{

@@ -17,7 +17,8 @@ module.exports = function(app) {
 
 	app.get('/*', function(req, res) {
 		// Displaying an already made view
-		res.send('<h1>nice try <3</h1>', 404);
+		// res.send('<h1>nice try <3</h1>', 404);
+		// res.sendfile('src/public/views/index.html');
 
 		Room.find({}, function(err, rooms){
 		  // console.log(rooms);

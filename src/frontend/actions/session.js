@@ -1,7 +1,6 @@
-export const POST_SIGNATURE = 'POST_SIGNATURE';
-export const RECEIVER_USER = 'RECEIVER_USER';
+export const RECEIVE_USER = 'RECEIVE_USER';
 
-export const receiveUser = (response) => ({
-  type: RECEIVER_USER,
-  response
+export const receiveUser = (user) => ({
+  type: RECEIVE_USER,
+  user: user
 });

@@ -1,4 +1,5 @@
-import { GET_ROOM, GENERATE_CODE, receiveCode, receiveRoomError } from '../actions/room';
+import { GET_ROOM, GENERATE_CODE, receiveCode, receiveRoomError} from '../actions/room';
+import { receiveUser, RECEIVE_USER } from '../actions/session';
 import { generateCode, getRoom } from '../util/room_api';
 
 const roomMiddleware = ({ getState, dispatch}) => next => action => {

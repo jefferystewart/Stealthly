@@ -10,8 +10,19 @@ module.exports = function(app, io) {
 		const host = req.body.host;
 		Room.generateCode(host, io, function(code) {
 			const nsp = io.of(`/${code}`);
+			console.log('new room generated');
 			nsp.on('connection', function(socket){
 				console.log(`connected to ${code}`);
+					socket.on('disconnect', function(){
+				    console.log('user disconnected');
+				  });
+					socket.on('chat message', function(msg, nickname){
+				    console.log('message: ' + msg + ', nickname: ' + nickname);
+						nsp.emit('chat message', msg, nickname);
+				  });
+					socket.on('log chat message', function(log){
+				    console.log('messages: ' + log);
+					});
 			});
 			res.send(code);
 		});

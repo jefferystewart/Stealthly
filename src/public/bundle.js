@@ -23840,7 +23840,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var defaultState = {
-	  user: null
+	  nickname: null
 	};
 	
 	var session = function session() {
@@ -23849,7 +23849,7 @@
 	
 	  switch (action.type) {
 	    case _session.RECEIVE_USER:
-	      return { user: action.user };
+	      return { nickname: action.user };
 	    default:
 	      return state;
 	  }
@@ -23866,13 +23866,12 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var POST_SIGNATURE = exports.POST_SIGNATURE = 'POST_SIGNATURE';
-	var RECEIVER_USER = exports.RECEIVER_USER = 'RECEIVER_USER';
+	var RECEIVE_USER = exports.RECEIVE_USER = 'RECEIVE_USER';
 	
-	var receiveUser = exports.receiveUser = function receiveUser(response) {
+	var receiveUser = exports.receiveUser = function receiveUser(user) {
 	  return {
-	    type: RECEIVER_USER,
-	    response: response
+	    type: RECEIVE_USER,
+	    user: user
 	  };
 	};
 
@@ -26628,12 +26627,14 @@
 	  }, {
 	    key: "redirectToChatRoom",
 	    value: function redirectToChatRoom(code) {
+	      this.props.receiveUser(this.state.nickname);
 	      _reactRouter.browserHistory.push(code);
 	    }
 	  }, {
 	    key: "joinChatRoom",
 	    value: function joinChatRoom(e) {
 	      if (this.state.code.length > 0 && this.state.code.length <= 4) {
+	        this.props.receiveUser(this.state.nickname);
 	        _reactRouter.browserHistory.push(this.state.code);
 	        this.setState({ codeError: false });
 	      } else {
@@ -26712,6 +26713,8 @@
 	});
 	
 	var _room = __webpack_require__(312);
+	
+	var _session = __webpack_require__(222);
 	
 	var _room_api = __webpack_require__(313);
 	
@@ -37108,6 +37111,8 @@
 	
 	var _room = __webpack_require__(312);
 	
+	var _session = __webpack_require__(222);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
@@ -37121,6 +37126,9 @@
 	  return {
 	    generateCode: function generateCode(host, callback) {
 	      return dispatch((0, _room.generateCode)(host, callback));
+	    },
+	    receiveUser: function receiveUser(nickname) {
+	      return dispatch((0, _session.receiveUser)(nickname));
 	    }
 	  };
 	};
@@ -41948,23 +41956,69 @@
 	  function Room(props) {
 	    _classCallCheck(this, Room);
 	
-	    return _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this, props));
+	
+	    _this.state = { socket: null, message: "", log: [] };
+	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(Room, [{
 	    key: "componentDidMount",
-	    value: function componentDidMount() {}
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      if (this.props.code && this.props.code.length > 0) {
+	        (function () {
+	          var socket = io("/" + _this2.props.code);
+	          socket.on('chat message', function (msg, nickname) {
+	            console.log(msg);
+	            var newLog = _this2.state.log;
+	            newLog.push({ user: nickname, msg: msg });
+	            socket.emit('log chat message', newLog);
+	            _this2.setState({ log: newLog });
+	          });
+	          _this2.setState({ socket: socket });
+	        })();
+	      }
+	    }
 	  }, {
 	    key: "componentWillReceiveProps",
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (nextProps.code.length > 0) {
-	        var socket = io("/" + nextProps.code);
+	      var _this3 = this;
+	
+	      if (nextProps.code && nextProps.code.length > 0) {
+	        (function () {
+	          var socket = io("/" + nextProps.code);
+	          socket.on('chat message', function (msg, nickname) {
+	            console.log(msg);
+	            var newLog = _this3.state.log;
+	            newLog.push({ user: nickname, msg: msg });
+	            socket.emit('log chat message', newLog);
+	            _this3.setState({ log: newLog });
+	          });
+	          _this3.setState({ socket: socket });
+	        })();
 	      }
+	    }
+	  }, {
+	    key: "handleChange",
+	    value: function handleChange(event) {
+	      this.setState({ message: event.target.value });
+	    }
+	  }, {
+	    key: "handleSubmit",
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      this.state.socket.emit('chat message', this.state.message, this.props.nickname);
+	      this.setState({ message: '' });
+	      return false;
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	
+	      window.state = this.state;
 	      if (this.props.error) {
 	        return _react2.default.createElement(
 	          "div",
@@ -41976,15 +42030,34 @@
 	          )
 	        );
 	      } else {
+	
 	        return _react2.default.createElement(
 	          "div",
 	          { className: "room" },
 	          _react2.default.createElement(
-	            "h3",
+	            "h1",
 	            null,
 	            " Room Code: ",
-	            this.props.code,
-	            " "
+	            this.props.code
+	          ),
+	          _react2.default.createElement(
+	            "form",
+	            { onSubmit: this.handleSubmit },
+	            _react2.default.createElement("input", { type: "text", value: this.state.message, onChange: this.handleChange }),
+	            _react2.default.createElement("input", { type: "submit", value: "Submit" })
+	          ),
+	          _react2.default.createElement(
+	            "ul",
+	            { id: "messages" },
+	            this.state.log.map(function (msg, idx) {
+	              return _react2.default.createElement(
+	                "li",
+	                { key: idx },
+	                msg.user,
+	                " : ",
+	                msg.msg
+	              );
+	            })
 	          )
 	        );
 	      }
@@ -42015,9 +42088,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	  var room = _ref.room;
+	  var room = _ref.room,
+	      session = _ref.session;
 	  return {
-	    code: room.code, error: room.error
+	    code: room.code, error: room.error, nickname: session.nickname
 	  };
 	};
 	
