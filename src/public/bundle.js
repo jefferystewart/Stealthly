@@ -26662,24 +26662,32 @@
 	      }
 	      return _react2.default.createElement(
 	        "div",
-	        { className: "menu text-center" },
-	        _react2.default.createElement(
-	          "h2",
-	          null,
-	          "Room Code"
-	        ),
-	        codeError,
-	        _react2.default.createElement("input", { onChange: this.updateCode.bind(this) }),
-	        _react2.default.createElement(
-	          "h2",
-	          null,
-	          "Name"
-	        ),
-	        nicknameError,
-	        _react2.default.createElement("input", { onChange: this.updateNickname.bind(this) }),
+	        { className: "container text-center col-xs-12 col-sm-8 col-sm-offset-2" },
 	        _react2.default.createElement(
 	          "div",
-	          null,
+	          { className: "form-group" },
+	          _react2.default.createElement(
+	            "label",
+	            { htmlFor: "roominput" },
+	            "Room Code"
+	          ),
+	          codeError,
+	          _react2.default.createElement("input", { className: "form-control input-lg button", id: "roominput", onChange: this.updateCode.bind(this) })
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "form-group" },
+	          _react2.default.createElement(
+	            "label",
+	            { htmlFor: "nameinput" },
+	            "Nickname"
+	          ),
+	          nicknameError,
+	          _react2.default.createElement("input", { className: "form-control input-lg button", id: "nameinput", onChange: this.updateNickname.bind(this) })
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "form-group" },
 	          _react2.default.createElement(
 	            "button",
 	            { className: "btn btn-default", onClick: this.generateCode.bind(this) },

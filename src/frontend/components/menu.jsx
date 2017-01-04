@@ -53,14 +53,18 @@ class Menu extends React.Component {
       );
     }
     return (
-      <div className="menu text-center">
-        <h2>Room Code</h2>
-        { codeError }
-        <input onChange={ this.updateCode.bind(this) }></input>
-        <h2>Name</h2>
-        { nicknameError }
-        <input onChange={ this.updateNickname.bind(this) }></input>
-        <div>
+      <div className="container text-center col-xs-12 col-sm-8 col-sm-offset-2">
+        <div className="form-group">
+          <label htmlFor="roominput">Room Code</label>
+          { codeError }
+          <input className="form-control input-lg button" id="roominput" onChange={ this.updateCode.bind(this) }></input>
+        </div>
+        <div className="form-group">
+          <label htmlFor="nameinput">Nickname</label>
+          { nicknameError }
+          <input className="form-control input-lg button" id="nameinput" onChange={ this.updateNickname.bind(this) }></input>
+        </div>
+        <div className="form-group">
           <button className="btn btn-default" onClick={ this.generateCode.bind(this) }>Create Room</button>
           <button className="btn btn-default" onClick={ this.joinChatRoom.bind(this) }>Join Room</button>
         </div>

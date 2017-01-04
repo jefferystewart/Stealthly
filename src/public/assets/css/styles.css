@@ -2,3 +2,8 @@
 .error{
 	color:red;
 }
+
+.menu-btn {
+	background-color: #b2d8e8;
+	display: block;
+}
