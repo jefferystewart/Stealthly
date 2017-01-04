@@ -13,7 +13,7 @@ class Room extends React.Component {
   componentDidMount(){
     if (this.props.code && this.props.code.length > 0){
       const socket = io(`/${this.props.code}`);
-      this._setupSocket(socket).bind(this);
+      this._setupSocket(socket);
     }
   }
 
@@ -55,8 +55,11 @@ class Room extends React.Component {
       );
     }else {
       return (
-        <div className="room">
-          <h1> Room Code: { this.props.code }</h1>
+        <div>
+          <div className="page-header text-center">
+            <h1> Room: { this.props.code }</h1>
+            <p> Share your code with your friends and have a ball! </p>
+          </div>
           <form onSubmit={ this.handleSubmit }>
             <input type="text" value={this.state.message} onChange={this.handleChange} />
             <input type="submit" value="Submit" />

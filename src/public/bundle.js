@@ -26649,20 +26649,20 @@
 	      if (this.state.nicknameError) {
 	        nicknameError = _react2.default.createElement(
 	          "p",
-	          null,
-	          " Please pick a name! "
+	          { className: "alert alert-danger" },
+	          " Please pick a name. "
 	        );
 	      }
 	      if (this.state.codeError) {
 	        codeError = _react2.default.createElement(
 	          "p",
-	          null,
-	          " Not an active room! "
+	          { className: "alert alert-danger" },
+	          " Not an active room. "
 	        );
 	      }
 	      return _react2.default.createElement(
 	        "div",
-	        { className: "menu" },
+	        { className: "menu text-center" },
 	        _react2.default.createElement(
 	          "h2",
 	          null,
@@ -26678,20 +26678,18 @@
 	        nicknameError,
 	        _react2.default.createElement("input", { onChange: this.updateNickname.bind(this) }),
 	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.generateCode.bind(this) },
-	          "Create Room"
-	        ),
-	        _react2.default.createElement(
-	          "button",
-	          { onClick: this.joinChatRoom.bind(this) },
-	          "Join Room"
-	        ),
-	        _react2.default.createElement(
-	          "h1",
+	          "div",
 	          null,
-	          " ",
-	          this.props.code
+	          _react2.default.createElement(
+	            "button",
+	            { className: "btn btn-default", onClick: this.generateCode.bind(this) },
+	            "Create Room"
+	          ),
+	          _react2.default.createElement(
+	            "button",
+	            { className: "btn btn-default", onClick: this.joinChatRoom.bind(this) },
+	            "Join Room"
+	          )
 	        )
 	      );
 	    }
@@ -41973,7 +41971,7 @@
 	    value: function componentDidMount() {
 	      if (this.props.code && this.props.code.length > 0) {
 	        var socket = io("/" + this.props.code);
-	        this._setupSocket(socket).bind(this);
+	        this._setupSocket(socket);
 	      }
 	    }
 	  }, {
@@ -42027,12 +42025,21 @@
 	      } else {
 	        return _react2.default.createElement(
 	          "div",
-	          { className: "room" },
+	          null,
 	          _react2.default.createElement(
-	            "h1",
-	            null,
-	            " Room Code: ",
-	            this.props.code
+	            "div",
+	            { className: "page-header text-center" },
+	            _react2.default.createElement(
+	              "h1",
+	              null,
+	              " Room: ",
+	              this.props.code
+	            ),
+	            _react2.default.createElement(
+	              "p",
+	              null,
+	              " Share your code with your friends and have a ball! "
+	            )
 	          ),
 	          _react2.default.createElement(
 	            "form",

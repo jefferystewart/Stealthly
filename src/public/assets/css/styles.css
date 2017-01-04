@@ -1,7 +1,4 @@
-.model-item {
-	padding-bottom: 5px;
-}
 
-#name-field {
-	margin-top: 80px;
+.error{
+	color:red;
 }

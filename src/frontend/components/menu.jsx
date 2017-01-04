@@ -44,26 +44,26 @@ class Menu extends React.Component {
     let nicknameError, codeError;
     if (this.state.nicknameError) {
       nicknameError = (
-        <p> Please pick a name! </p>
+        <p className="alert alert-danger"> Please pick a name. </p>
       );
     }
     if (this.state.codeError) {
       codeError = (
-        <p> Not an active room! </p>
+        <p className="alert alert-danger"> Not an active room. </p>
       );
     }
     return (
-      <div className="menu">
+      <div className="menu text-center">
         <h2>Room Code</h2>
         { codeError }
         <input onChange={ this.updateCode.bind(this) }></input>
         <h2>Name</h2>
         { nicknameError }
         <input onChange={ this.updateNickname.bind(this) }></input>
-        <button onClick={ this.generateCode.bind(this) }>Create Room</button>
-        <button onClick={ this.joinChatRoom.bind(this) }>Join Room</button>
-        <h1> { this.props.code }</h1>
-
+        <div>
+          <button className="btn btn-default" onClick={ this.generateCode.bind(this) }>Create Room</button>
+          <button className="btn btn-default" onClick={ this.joinChatRoom.bind(this) }>Join Room</button>
+        </div>
       </div>
     );
   }
