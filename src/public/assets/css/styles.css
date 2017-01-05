@@ -26,7 +26,7 @@ textarea {
 }
 
 .messages {
-	height: 68vh;
+	/*height: 68vh;*/
 	overflow: auto;
 }
 
@@ -38,4 +38,9 @@ textarea {
     border-radius: 4px;
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.italics {
+	font-style: italic;
+	color:lightgray;
 }

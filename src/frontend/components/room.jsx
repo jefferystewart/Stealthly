@@ -10,11 +10,18 @@ class Room extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  _unloadFunction(e){
+    e.preventDefault();
+    this.state.socket.emit("user-disconnected", this.props.nickname);
+    return e.returnValue;
+  }
+
   componentDidMount(){
     if (this.props.code && this.props.code.length > 0){
       const socket = io(`/${this.props.code}`);
       this._setupSocket(socket);
     }
+    window.addEventListener("beforeunload", this._unloadFunction.bind(this));
   }
 
   componentWillReceiveProps(nextProps){
@@ -24,11 +31,26 @@ class Room extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    window.removeEventListener("beforeunload", this._unloadFunction.bind(this));
+  }
+
   _setupSocket(socket) {
+    socket.emit('user-connect', this.props.nickname);
     socket.on('chat message', (msg, nickname) => {
       const newLog = this.state.log;
-      newLog.push({user: nickname, msg: msg});
+      newLog.push(<li className="list-group-item chat-item" key={ this.state.log.length }><strong>{ nickname }</strong> : { msg }</li>);
       socket.emit('log chat message', newLog);
+      this.setState({log:newLog});
+    });
+    socket.on('user-connect', (nickname) => {
+      const newLog = this.state.log;
+      newLog.push(<li className="list-group-item chat-item italics" key={ this.state.log.length }>{ nickname } has entered the room!</li>);
+      this.setState({log:newLog});
+    });
+    socket.on('user-disconnected', (nickname) => {
+      const newLog = this.state.log;
+      newLog.push(<li className="list-group-item chat-item italics" key={ this.state.log.length }>{ nickname } has left the room!</li>);
       this.setState({log:newLog});
     });
     this.setState({ socket: socket });
@@ -66,9 +88,7 @@ class Room extends React.Component {
 
             <form className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>
               <ul id="messages" className="list-group text-left messages">
-                { this.state.log.map(function(msg, idx){
-                    return <li className="list-group-item chat-item"key={ idx }><strong>{ msg.user }</strong> : { msg.msg }</li>;
-                  }) }
+                { this.state.log }
               </ul>
               <div className="form-group chat-box">
                 <div className="input-group">

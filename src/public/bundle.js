@@ -41994,12 +41994,20 @@
 	  }
 	
 	  _createClass(Room, [{
+	    key: "_unloadFunction",
+	    value: function _unloadFunction(e) {
+	      e.preventDefault();
+	      this.state.socket.emit("user-disconnected", this.props.nickname);
+	      return e.returnValue;
+	    }
+	  }, {
 	    key: "componentDidMount",
 	    value: function componentDidMount() {
 	      if (this.props.code && this.props.code.length > 0) {
 	        var socket = io("/" + this.props.code);
 	        this._setupSocket(socket);
 	      }
+	      window.addEventListener("beforeunload", this._unloadFunction.bind(this));
 	    }
 	  }, {
 	    key: "componentWillReceiveProps",
@@ -42010,14 +42018,50 @@
 	      }
 	    }
 	  }, {
+	    key: "componentWillUnmount",
+	    value: function componentWillUnmount() {
+	      window.removeEventListener("beforeunload", this._unloadFunction.bind(this));
+	    }
+	  }, {
 	    key: "_setupSocket",
 	    value: function _setupSocket(socket) {
 	      var _this2 = this;
 	
+	      socket.emit('user-connect', this.props.nickname);
 	      socket.on('chat message', function (msg, nickname) {
 	        var newLog = _this2.state.log;
-	        newLog.push({ user: nickname, msg: msg });
+	        newLog.push(_react2.default.createElement(
+	          "li",
+	          { className: "list-group-item chat-item", key: _this2.state.log.length },
+	          _react2.default.createElement(
+	            "strong",
+	            null,
+	            nickname
+	          ),
+	          " : ",
+	          msg
+	        ));
 	        socket.emit('log chat message', newLog);
+	        _this2.setState({ log: newLog });
+	      });
+	      socket.on('user-connect', function (nickname) {
+	        var newLog = _this2.state.log;
+	        newLog.push(_react2.default.createElement(
+	          "li",
+	          { className: "list-group-item chat-item italics", key: _this2.state.log.length },
+	          nickname,
+	          " has entered the room!"
+	        ));
+	        _this2.setState({ log: newLog });
+	      });
+	      socket.on('user-disconnected', function (nickname) {
+	        var newLog = _this2.state.log;
+	        newLog.push(_react2.default.createElement(
+	          "li",
+	          { className: "list-group-item chat-item italics", key: _this2.state.log.length },
+	          nickname,
+	          " has left the room!"
+	        ));
 	        _this2.setState({ log: newLog });
 	      });
 	      this.setState({ socket: socket });
@@ -42078,19 +42122,7 @@
 	              _react2.default.createElement(
 	                "ul",
 	                { id: "messages", className: "list-group text-left messages" },
-	                this.state.log.map(function (msg, idx) {
-	                  return _react2.default.createElement(
-	                    "li",
-	                    { className: "list-group-item chat-item", key: idx },
-	                    _react2.default.createElement(
-	                      "strong",
-	                      null,
-	                      msg.user
-	                    ),
-	                    " : ",
-	                    msg.msg
-	                  );
-	                })
+	                this.state.log
 	              ),
 	              _react2.default.createElement(
 	                "div",

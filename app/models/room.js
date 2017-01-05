@@ -14,7 +14,7 @@ var RoomSchema = new Schema ({
 	host: String
 });
 
-RoomSchema.statics.generateCode = function(host, io, cb){
+RoomSchema.statics.generateCode = function(host, cb){
 	let randomString = randomstring.generate(stringOptions);
 
 	const countFunc = function (err, count){

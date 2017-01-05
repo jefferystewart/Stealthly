@@ -5,23 +5,29 @@ module.exports = function(app, io) {
 		const Room = require('../models/room');
 		var bodyParser = require('body-parser');
 
-	app.post('/api/room/new', function(req, res) {
+	app.post('/api/room/new', (req, res) => {
 		if (!req.body.host) return res.sendStatus(400);
 		const host = req.body.host;
-		Room.generateCode(host, io, function(code) {
+		Room.generateCode(host, (code) => {
 			const nsp = io.of(`/${code}`);
-			console.log('new room generated');
-			nsp.on('connection', function(socket){
+			nsp.on('connection', (socket) => {
 				console.log(`connected to ${code}`);
-					socket.on('disconnect', function(){
+					socket.on('disconnect', () => {
 				    console.log('user disconnected');
 				  });
-					socket.on('chat message', function(msg, nickname){
-				    console.log('message: ' + msg + ', nickname: ' + nickname);
+					socket.on('user-disconnected', (nickname) => {
+						console.log('user disconnected');
+				    nsp.emit('user-disconnected', nickname);
+				  });
+					socket.on('user-connect', (nickname) => {
+				    nsp.emit('user-connect', nickname);
+				  });
+					socket.on('chat message', (msg, nickname) => {
+				    // console.log('message: ' + msg + ', nickname: ' + nickname);
 						nsp.emit('chat message', msg, nickname);
 				  });
-					socket.on('log chat message', function(log){
-				    console.log('messages: ' + log);
+					socket.on('log chat message', (log) =>{
+				    // console.log('messages: ' + log);
 					});
 			});
 			res.send(code);
