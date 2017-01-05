@@ -65,7 +65,12 @@ class Room extends React.Component {
             </div>
 
             <form className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>
-              <div className="form-group">
+              <ul id="messages" className="list-group text-left messages">
+                { this.state.log.map(function(msg, idx){
+                    return <li className="list-group-item chat-item"key={ idx }><strong>{ msg.user }</strong> : { msg.msg }</li>;
+                  }) }
+              </ul>
+              <div className="form-group chat-box">
                 <div className="input-group">
                   <input className= "form-control" type="text" value={this.state.message} onChange={this.handleChange} />
                   <span className="input-group-btn">
@@ -73,11 +78,6 @@ class Room extends React.Component {
                   </span>
                 </div>
               </div>
-              <ul id="messages" className="list-group text-left">
-                { this.state.log.map(function(msg, idx){
-                    return <li className="list-group-item chat-item"key={ idx }><strong>{ msg.user }</strong> : { msg.msg }</li>;
-                  }) }
-              </ul>
             </form>
 
 

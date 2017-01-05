@@ -42076,8 +42076,25 @@
 	              "form",
 	              { className: "col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat", onSubmit: this.handleSubmit },
 	              _react2.default.createElement(
+	                "ul",
+	                { id: "messages", className: "list-group text-left messages" },
+	                this.state.log.map(function (msg, idx) {
+	                  return _react2.default.createElement(
+	                    "li",
+	                    { className: "list-group-item chat-item", key: idx },
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      msg.user
+	                    ),
+	                    " : ",
+	                    msg.msg
+	                  );
+	                })
+	              ),
+	              _react2.default.createElement(
 	                "div",
-	                { className: "form-group" },
+	                { className: "form-group chat-box" },
 	                _react2.default.createElement(
 	                  "div",
 	                  { className: "input-group" },
@@ -42092,23 +42109,6 @@
 	                    )
 	                  )
 	                )
-	              ),
-	              _react2.default.createElement(
-	                "ul",
-	                { id: "messages", className: "list-group text-left" },
-	                this.state.log.map(function (msg, idx) {
-	                  return _react2.default.createElement(
-	                    "li",
-	                    { className: "list-group-item chat-item", key: idx },
-	                    _react2.default.createElement(
-	                      "strong",
-	                      null,
-	                      msg.user
-	                    ),
-	                    " : ",
-	                    msg.msg
-	                  );
-	                })
 	              )
 	            )
 	          )
