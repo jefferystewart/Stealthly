@@ -26665,6 +26665,25 @@
 	        { className: "container text-center col-xs-12 col-sm-8 col-sm-offset-2" },
 	        _react2.default.createElement(
 	          "div",
+	          { className: "page-header text-center" },
+	          _react2.default.createElement(
+	            "h1",
+	            null,
+	            "QUIPSMASH"
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            null,
+	            "Create a room and share the code with your friends!"
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            null,
+	            "If a friend gives you a code, join the room!"
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
 	          { className: "form-group" },
 	          _react2.default.createElement(
 	            "label",
@@ -42050,23 +42069,48 @@
 	            )
 	          ),
 	          _react2.default.createElement(
-	            "form",
-	            { onSubmit: this.handleSubmit },
-	            _react2.default.createElement("input", { type: "text", value: this.state.message, onChange: this.handleChange }),
-	            _react2.default.createElement("input", { type: "submit", value: "Submit" })
-	          ),
-	          _react2.default.createElement(
-	            "ul",
-	            { id: "messages" },
-	            this.state.log.map(function (msg, idx) {
-	              return _react2.default.createElement(
-	                "li",
-	                { key: idx },
-	                msg.user,
-	                " : ",
-	                msg.msg
-	              );
-	            })
+	            "div",
+	            { className: "row" },
+	            _react2.default.createElement("div", { className: "col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-0 text-center" }),
+	            _react2.default.createElement(
+	              "form",
+	              { className: "col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 text-center chat", onSubmit: this.handleSubmit },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "form-group" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "input-group" },
+	                  _react2.default.createElement("input", { className: "form-control", type: "text", value: this.state.message, onChange: this.handleChange }),
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "input-group-btn" },
+	                    _react2.default.createElement(
+	                      "button",
+	                      { type: "submit", value: "Submit", className: "btn btn-default" },
+	                      "Send"
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "ul",
+	                { id: "messages", className: "list-group text-left" },
+	                this.state.log.map(function (msg, idx) {
+	                  return _react2.default.createElement(
+	                    "li",
+	                    { className: "list-group-item chat-item", key: idx },
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      msg.user
+	                    ),
+	                    " : ",
+	                    msg.msg
+	                  );
+	                })
+	              )
+	            )
 	          )
 	        );
 	      }

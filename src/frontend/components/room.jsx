@@ -60,15 +60,30 @@ class Room extends React.Component {
             <h1> Room: { this.props.code }</h1>
             <p> Share your code with your friends and have a ball! </p>
           </div>
-          <form onSubmit={ this.handleSubmit }>
-            <input type="text" value={this.state.message} onChange={this.handleChange} />
-            <input type="submit" value="Submit" />
-          </form>
-          <ul id="messages">
-            { this.state.log.map(function(msg, idx){
-                return <li key={ idx }>{ msg.user } : { msg.msg }</li>;
-              }) }
-          </ul>
+          <div className="row">
+            <div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-0 text-center">
+            </div>
+
+            <form className="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>
+              <div className="form-group">
+                <div className="input-group">
+                  <input className= "form-control" type="text" value={this.state.message} onChange={this.handleChange} />
+                  <span className="input-group-btn">
+                    <button type="submit" value="Submit" className="btn btn-default">Send</button>
+                  </span>
+                </div>
+              </div>
+              <ul id="messages" className="list-group text-left">
+                { this.state.log.map(function(msg, idx){
+                    return <li className="list-group-item chat-item"key={ idx }><strong>{ msg.user }</strong> : { msg.msg }</li>;
+                  }) }
+              </ul>
+            </form>
+
+
+
+          </div>
+
         </div>
       );
     }
