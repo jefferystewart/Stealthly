@@ -60,11 +60,11 @@ class Room extends React.Component {
             <h1> Room: { this.props.code }</h1>
             <p> Share your code with your friends and have a ball! </p>
           </div>
-          <div className="row">
-            <div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-0 text-center">
+          <div>
+            <div className="col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center">
             </div>
 
-            <form className="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>
+            <form className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>
               <div className="form-group">
                 <div className="input-group">
                   <input className= "form-control" type="text" value={this.state.message} onChange={this.handleChange} />
