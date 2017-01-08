@@ -28960,6 +28960,22 @@
 	        socket.emit('log chat message', newLog);
 	        _this2.setState({ log: newLog });
 	      });
+	
+	      socket.on('chat gif', function (gif, nickname) {
+	        var newLog = _this2.state.log;
+	        newLog.push(_react2.default.createElement(
+	          "li",
+	          { className: "list-group-item chat-item", key: _this2.state.log.length },
+	          _react2.default.createElement(
+	            "strong",
+	            null,
+	            nickname
+	          ),
+	          " : ",
+	          _react2.default.createElement("img", { src: gif })
+	        ));
+	        _this2.setState({ log: newLog });
+	      });
 	      socket.on('user-connect', function (nickname) {
 	        var newLog = _this2.state.log;
 	        newLog.push(_react2.default.createElement(
@@ -28998,14 +29014,7 @@
 	  }, {
 	    key: "addGif",
 	    value: function addGif(gif) {
-	      var newLog = this.state.log;
-	      newLog.push(_react2.default.createElement(
-	        "li",
-	        { className: "list-group-item chat-item", key: this.state.log.length },
-	        gif
-	      ));
-	
-	      this.setState({ log: newLog });
+	      this.state.socket.emit('chat gif', gif, this.props.nickname);
 	    }
 	  }, {
 	    key: "render",
@@ -39344,7 +39353,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Gif.__proto__ || Object.getPrototypeOf(Gif)).call(this, props));
 	
-	    _this.state = { gifSearch: "", gifIdx: 0, currentGif: null, showGif: false };
+	    _this.state = { gifSearch: "", gifIdx: 0, currentGif: null, showGif: false, gifUrl: null };
 	    return _this;
 	  }
 	
@@ -39375,21 +39384,24 @@
 	        newIdx = (this.state.gifIdx + 1) % this.props.gifs.length;
 	      }
 	      var gif = this.props.gifs[newIdx];
-	      var currentGif = _react2.default.createElement("img", { src: gif.images.fixed_width_downsampled.url, alt: "HTML5 Icon" });
-	      this.setState({ gifIdx: newIdx, currentGif: currentGif });
+	      var url = gif.images.fixed_width_downsampled.url;
+	      var currentGif = _react2.default.createElement("img", { src: url, alt: "HTML5 Icon" });
+	      console.log(url);
+	      this.setState({ gifIdx: newIdx, currentGif: currentGif, gifUrl: url });
 	    }
 	  }, {
 	    key: "receivedGifs",
 	    value: function receivedGifs() {
 	      var gif = this.props.gifs[0];
-	      var currentGif = _react2.default.createElement("img", { src: gif.images.fixed_width_downsampled.url, alt: "HTML5 Icon" });
-	      this.setState({ currentGif: currentGif });
+	      var url = gif.images.fixed_width_downsampled.url;
+	      var currentGif = _react2.default.createElement("img", { src: url, alt: "HTML5 Icon" });
+	      this.setState({ currentGif: currentGif, gifUrl: url });
 	    }
 	  }, {
 	    key: "addGif",
 	    value: function addGif() {
-	      this.props.addGif(this.state.currentGif);
-	      this.setState({ currentGif: null, gifIdx: 0, gifSearch: "", showGif: false });
+	      this.props.addGif(this.state.gifUrl);
+	      this.setState({ currentGif: null, gifIdx: 0, gifSearch: "", showGif: false, gifUrl: null });
 	    }
 	  }, {
 	    key: "render",

@@ -4,7 +4,7 @@ class Gif extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { gifSearch:"", gifIdx:0, currentGif:null, showGif:false };
+    this.state = { gifSearch:"", gifIdx:0, currentGif:null, showGif:false, gifUrl:null };
   }
 
   handleChange(e) {
@@ -30,19 +30,22 @@ class Gif extends React.Component {
       newIdx = (this.state.gifIdx + 1) % this.props.gifs.length;
     }
     const gif = this.props.gifs[newIdx];
-    const currentGif = <img src={ gif.images.fixed_width_downsampled.url } alt="HTML5 Icon"></img>;
-    this.setState({ gifIdx: newIdx, currentGif: currentGif });
+    const url =  gif.images.fixed_width_downsampled.url;
+    const currentGif = <img src={ url } alt="HTML5 Icon"></img>;
+      console.log(url);
+    this.setState({ gifIdx: newIdx, currentGif: currentGif, gifUrl: url });
   }
 
   receivedGifs(){
     const gif = this.props.gifs[0];
-    const currentGif = <img src={ gif.images.fixed_width_downsampled.url } alt="HTML5 Icon"></img>;
-    this.setState({ currentGif: currentGif });
+    const url =  gif.images.fixed_width_downsampled.url;
+    const currentGif = <img src={ url } alt="HTML5 Icon"></img>;
+    this.setState({ currentGif: currentGif, gifUrl: url });
   }
 
   addGif(){
-    this.props.addGif(this.state.currentGif);
-    this.setState({ currentGif: null, gifIdx:0, gifSearch:"", showGif:false});
+    this.props.addGif(this.state.gifUrl);
+    this.setState({ currentGif: null, gifIdx:0, gifSearch:"", showGif:false, gifUrl:null});
   }
   render(){
     let gifOptions;

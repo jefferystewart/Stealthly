@@ -44,6 +44,12 @@ class Room extends React.Component {
       socket.emit('log chat message', newLog);
       this.setState({log:newLog});
     });
+
+    socket.on('chat gif', (gif, nickname) => {
+      const newLog = this.state.log;
+      newLog.push(<li className="list-group-item chat-item" key={ this.state.log.length }><strong>{ nickname }</strong> : <img src={ gif }></img></li>);
+      this.setState({log:newLog});
+    });
     socket.on('user-connect', (nickname) => {
       const newLog = this.state.log;
       newLog.push(<li className="list-group-item chat-item italics" key={ this.state.log.length }>{ nickname } has entered the room!</li>);
@@ -69,11 +75,7 @@ class Room extends React.Component {
   }
 
   addGif(gif){
-    const newLog = this.state.log;
-    newLog.push(
-      <li className="list-group-item chat-item" key={ this.state.log.length }>{ gif }</li>);
-
-    this.setState({log:newLog});
+    this.state.socket.emit('chat gif', gif, this.props.nickname);
   }
 
   render(){
