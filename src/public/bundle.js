@@ -39344,7 +39344,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Gif.__proto__ || Object.getPrototypeOf(Gif)).call(this, props));
 	
-	    _this.state = { gifSearch: "", gifIdx: 0, currentGif: null };
+	    _this.state = { gifSearch: "", gifIdx: 0, currentGif: null, showGif: false };
 	    return _this;
 	  }
 	
@@ -39359,6 +39359,7 @@
 	      e.preventDefault();
 	      var newGifs = [];
 	      this.props.getGifs(this.state.gifSearch, this.receivedGifs.bind(this));
+	      this.setState({ showGif: true });
 	    }
 	  }, {
 	    key: "handleClick",
@@ -39380,7 +39381,6 @@
 	  }, {
 	    key: "receivedGifs",
 	    value: function receivedGifs() {
-	      console.log('got gifs!');
 	      var gif = this.props.gifs[0];
 	      var currentGif = _react2.default.createElement("img", { src: gif.images.fixed_width_downsampled.url, alt: "HTML5 Icon" });
 	      this.setState({ currentGif: currentGif });
@@ -39389,41 +39389,50 @@
 	    key: "addGif",
 	    value: function addGif() {
 	      this.props.addGif(this.state.currentGif);
+	      this.setState({ currentGif: null, gifIdx: 0, gifSearch: "", showGif: false });
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var addGif = void 0;
-	      if (this.props.gifs) {
-	        addGif = _react2.default.createElement(
-	          "button",
-	          { onClick: this.addGif.bind(this) },
-	          "add"
+	      var gifOptions = void 0;
+	      if (this.state.showGif) {
+	        gifOptions = _react2.default.createElement(
+	          "div",
+	          null,
+	          _react2.default.createElement(
+	            "div",
+	            null,
+	            _react2.default.createElement(
+	              "button",
+	              { onClick: this.handleClick.bind(this, "left") },
+	              "left"
+	            ),
+	            this.state.currentGif,
+	            _react2.default.createElement(
+	              "button",
+	              { onClick: this.handleClick.bind(this, "right") },
+	              "right"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            null,
+	            _react2.default.createElement(
+	              "button",
+	              { onClick: this.addGif.bind(this) },
+	              "add"
+	            )
+	          )
 	        );
 	      }
 	      return _react2.default.createElement(
 	        "div",
 	        null,
-	        _react2.default.createElement(
-	          "div",
-	          null,
-	          this.state.currentGif,
-	          addGif,
-	          _react2.default.createElement(
-	            "button",
-	            { onClick: this.handleClick.bind(this, "left") },
-	            "left"
-	          ),
-	          _react2.default.createElement(
-	            "button",
-	            { onClick: this.handleClick.bind(this, "right") },
-	            "right"
-	          )
-	        ),
+	        gifOptions,
 	        _react2.default.createElement(
 	          "form",
 	          { onSubmit: this.handleSubmit.bind(this) },
-	          _react2.default.createElement("input", { onChange: this.handleChange.bind(this) }),
+	          _react2.default.createElement("input", { onChange: this.handleChange.bind(this), value: this.state.gifSearch }),
 	          _react2.default.createElement(
 	            "button",
 	            { type: "submit" },

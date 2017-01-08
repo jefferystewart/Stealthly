@@ -71,9 +71,7 @@ class Room extends React.Component {
   addGif(gif){
     const newLog = this.state.log;
     newLog.push(
-      <li className="list-group-item chat-item" key={ this.state.log.length }>
-        { gif }
-      </li>);
+      <li className="list-group-item chat-item" key={ this.state.log.length }>{ gif }</li>);
 
     this.setState({log:newLog});
   }
