@@ -1,5 +1,6 @@
 import React from "react";
 import $ from "jquery";
+import GifContainer from "./gif_container";
 
 class Room extends React.Component {
 
@@ -84,6 +85,7 @@ class Room extends React.Component {
           </div>
           <div>
             <div className="col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center">
+              <GifContainer/>
             </div>
 
             <form className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>

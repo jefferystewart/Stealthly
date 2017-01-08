@@ -18,3 +18,12 @@ export const getRoom = (roomCode, success, error) => {
     error
   });
 };
+
+export const getGifs = (query, success, error) => {
+  $.ajax({
+    method: "GET",
+    url: `http://api.giphy.com/v1/gifs/search?q=${query}&api_key=dc6zaTOxFJmzC`,
+    success,
+    error
+  });
+};
