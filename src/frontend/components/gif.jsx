@@ -2,58 +2,60 @@ import React from "react";
 
 class Gif extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {gifSearch:"", gifIdx:0};
+    this.state = {gifSearch:"", gifIdx:0, currentGif:null};
   }
 
-  componentDidMount(){
-  }
-
-  handleChange(e){
+  handleChange(e) {
     this.setState({gifSearch: e.target.value});
   }
 
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault();
     let newGifs = [];
     this.props.getGifs(this.state.gifSearch, this.receivedGifs.bind(this));
   }
 
-  handleClick(direction, e){
+  handleClick(direction, e) {
     let newIdx;
-    // debugger
-    if (direction === "left"){
-      // debugger
-      if (this.state.gifIdx <= 0){
+    if (direction === "left") {
+      if (this.state.gifIdx <= 0) {
         newIdx = this.props.gifs.length - 1;
       } else {
         newIdx = this.state.gifIdx - 1;
       }
-    }else if (direction === "right"){
-      // debugger
+    }else if (direction === "right") {
       newIdx = (this.state.gifIdx + 1) % this.props.gifs.length;
     }
-    console.log(newIdx);
-    this.setState({gifIdx: newIdx});
+    const gif = this.props.gifs[newIdx];
+    const currentGif = <img src={ gif.images.fixed_width_downsampled.url } alt="HTML5 Icon"></img>;
+    this.setState({ gifIdx: newIdx, currentGif: currentGif });
   }
 
   receivedGifs(){
     console.log('got gifs!');
+    const gif = this.props.gifs[0];
+    const currentGif = <img src={ gif.images.fixed_width_downsampled.url } alt="HTML5 Icon"></img>;
+    this.setState({ currentGif: currentGif });
+  }
+
+  addGif(){
+    this.props.addGif(this.state.currentGif);
   }
   render(){
-    let gifImg;
-    console.log(this.state.gifIdx);
-    if (this.props.gifs){
-      const gif = this.props.gifs[this.state.gifIdx];
-      gifImg = <img src={ gif.images.fixed_width_downsampled.url } alt="HTML5 Icon"></img>;
+    let addGif;
+    if (this.props.gifs) {
+      addGif = <button onClick= { this.addGif.bind(this) }>add</button>;
     }
     return (
       <div>
         <div>
-          { gifImg }
+          { this.state.currentGif }
+          { addGif }
           <button onClick= { this.handleClick.bind(this, "left") } >left</button>
           <button onClick= { this.handleClick.bind(this, "right") }>right</button>
+
         </div>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <input onChange={this.handleChange.bind(this)}></input>

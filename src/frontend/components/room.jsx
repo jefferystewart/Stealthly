@@ -68,6 +68,16 @@ class Room extends React.Component {
     return false;
   }
 
+  addGif(gif){
+    const newLog = this.state.log;
+    newLog.push(
+      <li className="list-group-item chat-item" key={ this.state.log.length }>
+        { gif }
+      </li>);
+
+    this.setState({log:newLog});
+  }
+
   render(){
     window.state = this.state;
     if (this.props.error){
@@ -85,7 +95,7 @@ class Room extends React.Component {
           </div>
           <div>
             <div className="col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center">
-              <GifContainer/>
+              <GifContainer addGif={this.addGif.bind(this)}/>
             </div>
 
             <form className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>

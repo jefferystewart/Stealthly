@@ -28996,6 +28996,18 @@
 	      return false;
 	    }
 	  }, {
+	    key: "addGif",
+	    value: function addGif(gif) {
+	      var newLog = this.state.log;
+	      newLog.push(_react2.default.createElement(
+	        "li",
+	        { className: "list-group-item chat-item", key: this.state.log.length },
+	        gif
+	      ));
+	
+	      this.setState({ log: newLog });
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      window.state = this.state;
@@ -29034,7 +29046,7 @@
 	            _react2.default.createElement(
 	              "div",
 	              { className: "col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center" },
-	              _react2.default.createElement(_gif_container2.default, null)
+	              _react2.default.createElement(_gif_container2.default, { addGif: this.addGif.bind(this) })
 	            ),
 	            _react2.default.createElement(
 	              "form",
@@ -39332,14 +39344,11 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Gif.__proto__ || Object.getPrototypeOf(Gif)).call(this, props));
 	
-	    _this.state = { gifSearch: "", gifIdx: 0 };
+	    _this.state = { gifSearch: "", gifIdx: 0, currentGif: null };
 	    return _this;
 	  }
 	
 	  _createClass(Gif, [{
-	    key: "componentDidMount",
-	    value: function componentDidMount() {}
-	  }, {
 	    key: "handleChange",
 	    value: function handleChange(e) {
 	      this.setState({ gifSearch: e.target.value });
@@ -39355,34 +39364,42 @@
 	    key: "handleClick",
 	    value: function handleClick(direction, e) {
 	      var newIdx = void 0;
-	      // debugger
 	      if (direction === "left") {
-	        // debugger
 	        if (this.state.gifIdx <= 0) {
 	          newIdx = this.props.gifs.length - 1;
 	        } else {
 	          newIdx = this.state.gifIdx - 1;
 	        }
 	      } else if (direction === "right") {
-	        // debugger
 	        newIdx = (this.state.gifIdx + 1) % this.props.gifs.length;
 	      }
-	      console.log(newIdx);
-	      this.setState({ gifIdx: newIdx });
+	      var gif = this.props.gifs[newIdx];
+	      var currentGif = _react2.default.createElement("img", { src: gif.images.fixed_width_downsampled.url, alt: "HTML5 Icon" });
+	      this.setState({ gifIdx: newIdx, currentGif: currentGif });
 	    }
 	  }, {
 	    key: "receivedGifs",
 	    value: function receivedGifs() {
 	      console.log('got gifs!');
+	      var gif = this.props.gifs[0];
+	      var currentGif = _react2.default.createElement("img", { src: gif.images.fixed_width_downsampled.url, alt: "HTML5 Icon" });
+	      this.setState({ currentGif: currentGif });
+	    }
+	  }, {
+	    key: "addGif",
+	    value: function addGif() {
+	      this.props.addGif(this.state.currentGif);
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var gifImg = void 0;
-	      console.log(this.state.gifIdx);
+	      var addGif = void 0;
 	      if (this.props.gifs) {
-	        var gif = this.props.gifs[this.state.gifIdx];
-	        gifImg = _react2.default.createElement("img", { src: gif.images.fixed_width_downsampled.url, alt: "HTML5 Icon" });
+	        addGif = _react2.default.createElement(
+	          "button",
+	          { onClick: this.addGif.bind(this) },
+	          "add"
+	        );
 	      }
 	      return _react2.default.createElement(
 	        "div",
@@ -39390,7 +39407,8 @@
 	        _react2.default.createElement(
 	          "div",
 	          null,
-	          gifImg,
+	          this.state.currentGif,
+	          addGif,
 	          _react2.default.createElement(
 	            "button",
 	            { onClick: this.handleClick.bind(this, "left") },
