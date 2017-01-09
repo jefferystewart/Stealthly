@@ -29014,6 +29014,7 @@
 	  }, {
 	    key: "addGif",
 	    value: function addGif(gif) {
+	      this.setState({ message: '' });
 	      this.state.socket.emit('chat gif', gif, this.props.nickname);
 	    }
 	  }, {
@@ -29031,6 +29032,11 @@
 	          )
 	        );
 	      } else {
+	        var gifContainer = void 0;
+	        if (this.state.message === "gif") {
+	          gifContainer = _react2.default.createElement(_gif_container2.default, { addGif: this.addGif.bind(this) });
+	        }
+	
 	        return _react2.default.createElement(
 	          "div",
 	          null,
@@ -29051,15 +29057,11 @@
 	          ),
 	          _react2.default.createElement(
 	            "div",
-	            null,
+	            { className: "container viewport" },
+	            _react2.default.createElement("div", { className: "col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center" }),
 	            _react2.default.createElement(
 	              "div",
-	              { className: "col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center" },
-	              _react2.default.createElement(_gif_container2.default, { addGif: this.addGif.bind(this) })
-	            ),
-	            _react2.default.createElement(
-	              "form",
-	              { className: "col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat", onSubmit: this.handleSubmit },
+	              { className: "col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" },
 	              _react2.default.createElement(
 	                "ul",
 	                { id: "messages", className: "list-group text-left messages" },
@@ -29067,21 +29069,26 @@
 	              ),
 	              _react2.default.createElement(
 	                "div",
-	                { className: "form-group chat-box" },
+	                { className: "chat-box" },
 	                _react2.default.createElement(
-	                  "div",
-	                  { className: "input-group" },
-	                  _react2.default.createElement("input", { className: "form-control", type: "text", value: this.state.message, onChange: this.handleChange }),
+	                  "form",
+	                  { className: "form-group", onSubmit: this.handleSubmit },
 	                  _react2.default.createElement(
-	                    "span",
-	                    { className: "input-group-btn" },
+	                    "div",
+	                    { className: "input-group" },
+	                    _react2.default.createElement("input", { className: "form-control", type: "text", value: this.state.message, onChange: this.handleChange }),
 	                    _react2.default.createElement(
-	                      "button",
-	                      { type: "submit", value: "Submit", className: "btn btn-default" },
-	                      "Send"
+	                      "span",
+	                      { className: "input-group-btn" },
+	                      _react2.default.createElement(
+	                        "button",
+	                        { type: "submit", value: "Submit", className: "btn btn-default" },
+	                        "Send"
+	                      )
 	                    )
 	                  )
-	                )
+	                ),
+	                gifContainer
 	              )
 	            )
 	          )
@@ -39373,6 +39380,7 @@
 	  }, {
 	    key: "handleClick",
 	    value: function handleClick(direction, e) {
+	      e.preventDefault();
 	      var newIdx = void 0;
 	      if (direction === "left") {
 	        if (this.state.gifIdx <= 0) {
@@ -39385,7 +39393,7 @@
 	      }
 	      var gif = this.props.gifs[newIdx];
 	      var url = gif.images.fixed_width_downsampled.url;
-	      var currentGif = _react2.default.createElement("img", { src: url, alt: "HTML5 Icon" });
+	      var currentGif = _react2.default.createElement("img", { src: url, alt: "HTML5 Icon", className: "gif" });
 	      console.log(url);
 	      this.setState({ gifIdx: newIdx, currentGif: currentGif, gifUrl: url });
 	    }
@@ -39394,7 +39402,7 @@
 	    value: function receivedGifs() {
 	      var gif = this.props.gifs[0];
 	      var url = gif.images.fixed_width_downsampled.url;
-	      var currentGif = _react2.default.createElement("img", { src: url, alt: "HTML5 Icon" });
+	      var currentGif = _react2.default.createElement("img", { src: url, alt: "HTML5 Icon", className: "gif" });
 	      this.setState({ currentGif: currentGif, gifUrl: url });
 	    }
 	  }, {
@@ -39413,26 +39421,23 @@
 	          null,
 	          _react2.default.createElement(
 	            "div",
-	            null,
-	            _react2.default.createElement(
-	              "button",
-	              { onClick: this.handleClick.bind(this, "left") },
-	              "left"
-	            ),
+	            { className: "gifs" },
+	            _react2.default.createElement("span", { className: "center-gif-helper" }),
 	            this.state.currentGif,
 	            _react2.default.createElement(
 	              "button",
-	              { onClick: this.handleClick.bind(this, "right") },
-	              "right"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            null,
+	              { onClick: this.handleClick.bind(this, "left"), className: "left-arrow transparent-button" },
+	              "<"
+	            ),
 	            _react2.default.createElement(
 	              "button",
-	              { onClick: this.addGif.bind(this) },
-	              "add"
+	              { onClick: this.handleClick.bind(this, "right"), className: "right-arrow transparent-button" },
+	              ">"
+	            ),
+	            _react2.default.createElement(
+	              "button",
+	              { onClick: this.addGif.bind(this), className: "add-gif transparent-button" },
+	              "+"
 	            )
 	          )
 	        );
@@ -39443,12 +39448,25 @@
 	        gifOptions,
 	        _react2.default.createElement(
 	          "form",
-	          { onSubmit: this.handleSubmit.bind(this) },
-	          _react2.default.createElement("input", { onChange: this.handleChange.bind(this), value: this.state.gifSearch }),
+	          { className: "form-group", onSubmit: this.handleSubmit.bind(this) },
 	          _react2.default.createElement(
-	            "button",
-	            { type: "submit" },
-	            "Submit"
+	            "div",
+	            { className: "input-group" },
+	            _react2.default.createElement(
+	              "span",
+	              { className: "input-group-addon" },
+	              "GIF"
+	            ),
+	            _react2.default.createElement("input", { className: "form-control", type: "text", onChange: this.handleChange.bind(this), value: this.state.gifSearch }),
+	            _react2.default.createElement(
+	              "span",
+	              { className: "input-group-btn" },
+	              _react2.default.createElement(
+	                "button",
+	                { type: "submit", value: "Submit", className: "btn btn-default" },
+	                "Search"
+	              )
+	            )
 	          )
 	        )
 	      );

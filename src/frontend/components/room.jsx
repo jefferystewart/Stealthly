@@ -75,6 +75,7 @@ class Room extends React.Component {
   }
 
   addGif(gif){
+    this.setState({ message:'' });
     this.state.socket.emit('chat gif', gif, this.props.nickname);
   }
 
@@ -87,30 +88,37 @@ class Room extends React.Component {
         </div>
       );
     }else {
+      let gifContainer;
+      if(this.state.message === "gif"){
+        gifContainer = <GifContainer addGif={this.addGif.bind(this)}/>;
+      }
+
       return (
         <div>
           <div className="page-header text-center">
             <h1> Room: { this.props.code }</h1>
             <p> Share your code with your friends and have a ball! </p>
           </div>
-          <div>
+          <div className="container viewport">
             <div className="col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center">
-              <GifContainer addGif={this.addGif.bind(this)}/>
-            </div>
 
-            <form className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" onSubmit={ this.handleSubmit }>
+            </div>
+            <div className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat">
               <ul id="messages" className="list-group text-left messages">
                 { this.state.log }
               </ul>
-              <div className="form-group chat-box">
-                <div className="input-group">
-                  <input className= "form-control" type="text" value={this.state.message} onChange={this.handleChange} />
-                  <span className="input-group-btn">
-                    <button type="submit" value="Submit" className="btn btn-default">Send</button>
-                  </span>
-                </div>
+              <div className="chat-box">
+                <form className="form-group" onSubmit={ this.handleSubmit }>
+                  <div className="input-group">
+                    <input className= "form-control" type="text" value={this.state.message} onChange={this.handleChange} />
+                    <span className="input-group-btn">
+                      <button type="submit" value="Submit" className="btn btn-default">Send</button>
+                    </span>
+                  </div>
+                </form>
+                { gifContainer }
               </div>
-            </form>
+            </div>
 
 
 
