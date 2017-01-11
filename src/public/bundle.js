@@ -29061,7 +29061,7 @@
 	      if (this.props.error) {
 	        return _react2.default.createElement(
 	          "div",
-	          { className: "page-header text-center" },
+	          { className: "room-header text-center" },
 	          _react2.default.createElement(
 	            "h1",
 	            null,
@@ -29134,7 +29134,7 @@
 	          null,
 	          _react2.default.createElement(
 	            "div",
-	            { className: "page-header text-center" },
+	            { className: "room-header text-center" },
 	            _react2.default.createElement(
 	              "h1",
 	              null,
@@ -29150,10 +29150,10 @@
 	          _react2.default.createElement(
 	            "div",
 	            null,
-	            _react2.default.createElement("div", { className: "col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center" }),
+	            _react2.default.createElement("div", { className: "col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center" }),
 	            _react2.default.createElement(
 	              "div",
-	              { className: "col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" },
+	              { className: "col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center chat" },
 	              nicknameContainer,
 	              _react2.default.createElement(
 	                "ul",

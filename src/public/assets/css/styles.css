@@ -8,8 +8,9 @@
 	display: block;
 }
 
-.chat {
-
+.room-header {
+  margin-bottom: 10px;
+	border-bottom: 1px solid #eee;
 }
 
 .chat-item {
@@ -46,6 +47,18 @@ textarea {
 	color:lightgray;
 }
 
+.transparent-button {
+	background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+	line-height: 1;
+	color: white;
+	text-shadow: 0px 2px black;
+}
+
 .right-arrow{
 	position: absolute;
 	bottom: 0;
@@ -63,7 +76,6 @@ textarea {
 .add-gif{
 	position: absolute;
 	font-size: 50px;
-	color:black;
 	bottom: 0;
 	left: calc(50% - 21px);
 }
@@ -83,16 +95,4 @@ textarea {
 	display: inline-block;
 	height: 100%;
 	vertical-align: middle;
-}
-
-.transparent-button {
-	background-color: Transparent;
-  background-repeat:no-repeat;
-  border: none;
-  cursor:pointer;
-  overflow: hidden;
-  outline:none;
-	line-height: 1;
-	color: white;
-	text-shadow: 0px 2px black;
 }

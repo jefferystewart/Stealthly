@@ -107,7 +107,7 @@ class Room extends React.Component {
     window.state = this.state;
     if (this.props.error){
       return(
-        <div className="page-header text-center">
+        <div className="room-header text-center">
           <h1>{ this.props.error }</h1>
           <p> Check to make sure the code is correct!! </p>
         </div>
@@ -145,15 +145,14 @@ class Room extends React.Component {
       }
       return (
         <div>
-          <div className="page-header text-center">
+          <div className="room-header text-center">
             <h1> Room: { this.props.code }</h1>
             <p> Share your code with your friends and have a ball! </p>
           </div>
           <div>
-            <div className="col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center">
-
+            <div className="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center">
             </div>
-            <div className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat">
+            <div className="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center chat">
               { nicknameContainer }
               <ul id="messages" className="list-group text-left messages">
                 { this.state.log }
@@ -163,11 +162,7 @@ class Room extends React.Component {
                 { gifContainer }
               </div>
             </div>
-
-
-
           </div>
-
         </div>
       );
     }
