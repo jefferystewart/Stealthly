@@ -8,6 +8,10 @@
 	display: block;
 }
 
+.chat {
+
+}
+
 .chat-item {
 	border:none;
 	padding: 2px 5px;
@@ -20,14 +24,11 @@ textarea {
 }
 
 .chat-box {
-	position: fixed;
-  bottom: 0px;
-	margin-right: 15px;
 }
 
 .messages {
-	/*height: 68vh;*/
 	overflow: auto;
+	height: calc(100% - 270px);
 }
 
 ::-webkit-scrollbar {

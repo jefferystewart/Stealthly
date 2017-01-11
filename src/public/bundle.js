@@ -28939,6 +28939,11 @@
 	      window.removeEventListener("beforeunload", this._unloadFunction.bind(this));
 	    }
 	  }, {
+	    key: "_scrollToBottom",
+	    value: function _scrollToBottom() {
+	      (0, _jquery2.default)('.messages').animate({ scrollTop: (0, _jquery2.default)('.messages').prop("scrollHeight") }, 50);
+	    }
+	  }, {
 	    key: "_setupSocket",
 	    value: function _setupSocket(socket) {
 	      var _this2 = this;
@@ -28958,6 +28963,7 @@
 	          msg
 	        ));
 	        socket.emit('log chat message', newLog);
+	        _this2._scrollToBottom();
 	        _this2.setState({ log: newLog });
 	      });
 	
@@ -28974,6 +28980,7 @@
 	          " : ",
 	          _react2.default.createElement("img", { src: gif })
 	        ));
+	        _this2._scrollToBottom();
 	        _this2.setState({ log: newLog });
 	      });
 	      socket.on('user-connect', function (nickname) {
@@ -28984,6 +28991,7 @@
 	          nickname,
 	          " has entered the room!"
 	        ));
+	        _this2._scrollToBottom();
 	        _this2.setState({ log: newLog });
 	      });
 	      socket.on('user-disconnected', function (nickname) {
@@ -28994,6 +29002,7 @@
 	          nickname,
 	          " has left the room!"
 	        ));
+	        _this2._scrollToBottom();
 	        _this2.setState({ log: newLog });
 	      });
 	      this.setState({ socket: socket });
@@ -29032,11 +29041,34 @@
 	          )
 	        );
 	      } else {
-	        var gifContainer = void 0;
-	        if (this.state.message === "gif") {
+	        var gifContainer = void 0,
+	            gifButton = void 0,
+	            textContainer = void 0,
+	            nicknameContainer = void 0;
+	        if (this.state.message.toLowerCase() === "gif") {
 	          gifContainer = _react2.default.createElement(_gif_container2.default, { addGif: this.addGif.bind(this) });
 	        }
 	
+	        if (true) {
+	          textContainer = _react2.default.createElement(
+	            "form",
+	            { className: "form-group", onSubmit: this.handleSubmit },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "input-group" },
+	              _react2.default.createElement("input", { className: "form-control", type: "text", value: this.state.message, onChange: this.handleChange }),
+	              _react2.default.createElement(
+	                "span",
+	                { className: "input-group-btn" },
+	                _react2.default.createElement(
+	                  "button",
+	                  { type: "submit", value: "Submit", className: "btn btn-default" },
+	                  "Send"
+	                )
+	              )
+	            )
+	          );
+	        } else {}
 	        return _react2.default.createElement(
 	          "div",
 	          null,
@@ -29057,7 +29089,7 @@
 	          ),
 	          _react2.default.createElement(
 	            "div",
-	            { className: "container viewport" },
+	            null,
 	            _react2.default.createElement("div", { className: "col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-0 text-center" }),
 	            _react2.default.createElement(
 	              "div",
@@ -29070,24 +29102,7 @@
 	              _react2.default.createElement(
 	                "div",
 	                { className: "chat-box" },
-	                _react2.default.createElement(
-	                  "form",
-	                  { className: "form-group", onSubmit: this.handleSubmit },
-	                  _react2.default.createElement(
-	                    "div",
-	                    { className: "input-group" },
-	                    _react2.default.createElement("input", { className: "form-control", type: "text", value: this.state.message, onChange: this.handleChange }),
-	                    _react2.default.createElement(
-	                      "span",
-	                      { className: "input-group-btn" },
-	                      _react2.default.createElement(
-	                        "button",
-	                        { type: "submit", value: "Submit", className: "btn btn-default" },
-	                        "Send"
-	                      )
-	                    )
-	                  )
-	                ),
+	                textContainer,
 	                gifContainer
 	              )
 	            )
