@@ -10,8 +10,11 @@ const io = require('socket.io')(http);
 // Configs
 const db = require('./config/db');
 
+
+let dbUrl = process.env.MLAB_URL || db.url;
+console.log(dbUrl);
 // Connect to the DB
-mongoose.connect(db.url);
+mongoose.connect(dbUrl);
 app.use(express.static(__dirname + '/src/public'));
 
 // log every request to the console
