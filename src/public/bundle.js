@@ -28847,6 +28847,8 @@
 	
 	var _reactRedux = __webpack_require__(179);
 	
+	var _session = __webpack_require__(273);
+	
 	var _room = __webpack_require__(275);
 	
 	var _room2 = _interopRequireDefault(_room);
@@ -28861,7 +28863,15 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(_room2.default);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    receiveUser: function receiveUser(nickname) {
+	      return dispatch((0, _session.receiveUser)(nickname));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_room2.default);
 
 /***/ },
 /* 275 */
@@ -28903,7 +28913,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this, props));
 	
-	    _this.state = { socket: null, message: "", log: [] };
+	    _this.state = { socket: null, message: "", log: [], nickname: null };
 	    _this.handleChange = _this.handleChange.bind(_this);
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
@@ -28921,7 +28931,9 @@
 	    value: function componentDidMount() {
 	      if (this.props.code && this.props.code.length > 0) {
 	        var socket = io("/" + this.props.code);
-	        this._setupSocket(socket);
+	        if (!this.state.socket) {
+	          this._setupSocket(socket);
+	        }
 	      }
 	      window.addEventListener("beforeunload", this._unloadFunction.bind(this));
 	    }
@@ -28930,7 +28942,9 @@
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (nextProps.code && nextProps.code.length > 0) {
 	        var socket = io("/" + nextProps.code);
-	        this._setupSocket(socket);
+	        if (!this.state.socket) {
+	          this._setupSocket(socket);
+	        }
 	      }
 	    }
 	  }, {
@@ -28948,7 +28962,9 @@
 	    value: function _setupSocket(socket) {
 	      var _this2 = this;
 	
-	      socket.emit('user-connect', this.props.nickname);
+	      if (this.props.nickname) {
+	        socket.emit('user-connect', this.props.nickname);
+	      }
 	      socket.on('chat message', function (msg, nickname) {
 	        var newLog = _this2.state.log;
 	        newLog.push(_react2.default.createElement(
@@ -29027,6 +29043,18 @@
 	      this.state.socket.emit('chat gif', gif, this.props.nickname);
 	    }
 	  }, {
+	    key: "updateNickname",
+	    value: function updateNickname(e) {
+	      this.setState({ nickname: e.currentTarget.value });
+	    }
+	  }, {
+	    key: "submitNickname",
+	    value: function submitNickname(e) {
+	      e.preventDefault();
+	      this.props.receiveUser(this.state.nickname);
+	      this.state.socket.emit('user-connect', this.state.nickname);
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      window.state = this.state;
@@ -29045,30 +29073,57 @@
 	            gifButton = void 0,
 	            textContainer = void 0,
 	            nicknameContainer = void 0;
-	        if (this.state.message.toLowerCase() === "gif") {
-	          gifContainer = _react2.default.createElement(_gif_container2.default, { addGif: this.addGif.bind(this) });
-	        }
 	
-	        if (true) {
-	          textContainer = _react2.default.createElement(
+	        if (this.props.nickname) {
+	
+	          if (this.state.message.toLowerCase() === "gif") {
+	            gifContainer = _react2.default.createElement(_gif_container2.default, { addGif: this.addGif.bind(this) });
+	          }
+	          if (true) {
+	            textContainer = _react2.default.createElement(
+	              "form",
+	              { className: "form-group", onSubmit: this.handleSubmit },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "input-group" },
+	                _react2.default.createElement("input", { className: "form-control", type: "text", value: this.state.message, onChange: this.handleChange }),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "input-group-btn" },
+	                  _react2.default.createElement(
+	                    "button",
+	                    { type: "submit", value: "Submit", className: "btn btn-default" },
+	                    "Send"
+	                  )
+	                )
+	              )
+	            );
+	          }
+	        } else {
+	          nicknameContainer = _react2.default.createElement(
 	            "form",
-	            { className: "form-group", onSubmit: this.handleSubmit },
+	            { className: "form-group", onSubmit: this.submitNickname.bind(this) },
+	            _react2.default.createElement(
+	              "label",
+	              { htmlFor: "nameinput" },
+	              "Choose a nickname!"
+	            ),
 	            _react2.default.createElement(
 	              "div",
 	              { className: "input-group" },
-	              _react2.default.createElement("input", { className: "form-control", type: "text", value: this.state.message, onChange: this.handleChange }),
+	              _react2.default.createElement("input", { className: "form-control", type: "text", id: "nameinput", onChange: this.updateNickname.bind(this) }),
 	              _react2.default.createElement(
 	                "span",
 	                { className: "input-group-btn" },
 	                _react2.default.createElement(
 	                  "button",
 	                  { type: "submit", value: "Submit", className: "btn btn-default" },
-	                  "Send"
+	                  "Go"
 	                )
 	              )
 	            )
 	          );
-	        } else {}
+	        }
 	        return _react2.default.createElement(
 	          "div",
 	          null,
@@ -29094,6 +29149,7 @@
 	            _react2.default.createElement(
 	              "div",
 	              { className: "col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat" },
+	              nicknameContainer,
 	              _react2.default.createElement(
 	                "ul",
 	                { id: "messages", className: "list-group text-left messages" },

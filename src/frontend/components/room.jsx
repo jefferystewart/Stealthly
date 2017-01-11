@@ -6,7 +6,7 @@ class Room extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {socket: null, message:"", log:[] };
+    this.state = {socket: null, message:"", log:[], nickname:null };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -20,7 +20,9 @@ class Room extends React.Component {
   componentDidMount(){
     if (this.props.code && this.props.code.length > 0){
       const socket = io(`/${this.props.code}`);
-      this._setupSocket(socket);
+      if (!this.state.socket){
+        this._setupSocket(socket);
+      }
     }
     window.addEventListener("beforeunload", this._unloadFunction.bind(this));
   }
@@ -28,7 +30,9 @@ class Room extends React.Component {
   componentWillReceiveProps(nextProps){
     if (nextProps.code && nextProps.code.length > 0){
       const socket = io(`/${nextProps.code}`);
-      this._setupSocket(socket);
+      if (!this.state.socket){
+        this._setupSocket(socket);
+      }
     }
   }
 
@@ -41,7 +45,9 @@ class Room extends React.Component {
   }
 
   _setupSocket(socket) {
-    socket.emit('user-connect', this.props.nickname);
+    if (this.props.nickname){
+      socket.emit('user-connect', this.props.nickname);
+    }
     socket.on('chat message', (msg, nickname) => {
       const newLog = this.state.log;
       newLog.push(<li className="list-group-item chat-item" key={ this.state.log.length }><strong>{ nickname }</strong> : { msg }</li>);
@@ -87,6 +93,16 @@ class Room extends React.Component {
     this.state.socket.emit('chat gif', gif, this.props.nickname);
   }
 
+  updateNickname(e){
+    this.setState({ nickname:e.currentTarget.value });
+  }
+
+  submitNickname(e){
+    e.preventDefault();
+    this.props.receiveUser(this.state.nickname);
+    this.state.socket.emit('user-connect', this.state.nickname);
+  }
+
   render(){
     window.state = this.state;
     if (this.props.error){
@@ -97,21 +113,34 @@ class Room extends React.Component {
       );
     }else {
       let gifContainer, gifButton, textContainer, nicknameContainer;
-      if(this.state.message.toLowerCase() === "gif"){
-        gifContainer = <GifContainer addGif={this.addGif.bind(this)}/>;
-      }
 
-      if (true){
-        textContainer = <form className="form-group" onSubmit={ this.handleSubmit }>
-          <div className="input-group">
-            <input className= "form-control" type="text" value={this.state.message} onChange={this.handleChange} />
-            <span className="input-group-btn">
-              <button type="submit" value="Submit" className="btn btn-default">Send</button>
-            </span>
-          </div>
-        </form>;
-      } else {
+      if (this.props.nickname){
 
+        if(this.state.message.toLowerCase() === "gif"){
+          gifContainer = <GifContainer addGif={this.addGif.bind(this)}/>;
+        }
+        if (true){
+          textContainer =
+          <form className="form-group" onSubmit={ this.handleSubmit }>
+            <div className="input-group">
+              <input className= "form-control" type="text" value={this.state.message} onChange={this.handleChange} />
+              <span className="input-group-btn">
+                <button type="submit" value="Submit" className="btn btn-default">Send</button>
+              </span>
+            </div>
+          </form>;
+        }
+      } else{
+        nicknameContainer =
+          <form className="form-group" onSubmit={ this.submitNickname.bind(this) }>
+            <label htmlFor="nameinput">Choose a nickname!</label>
+            <div className="input-group">
+              <input className= "form-control" type="text" id="nameinput" onChange={ this.updateNickname.bind(this) } />
+              <span className="input-group-btn">
+                <button type="submit" value="Submit" className="btn btn-default">Go</button>
+              </span>
+            </div>
+          </form>;
       }
       return (
         <div>
@@ -124,6 +153,7 @@ class Room extends React.Component {
 
             </div>
             <div className="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0 text-center chat">
+              { nicknameContainer }
               <ul id="messages" className="list-group text-left messages">
                 { this.state.log }
               </ul>
