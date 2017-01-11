@@ -29061,11 +29061,16 @@
 	      if (this.props.error) {
 	        return _react2.default.createElement(
 	          "div",
-	          { className: "room" },
+	          { className: "page-header text-center" },
 	          _react2.default.createElement(
-	            "h3",
+	            "h1",
 	            null,
 	            this.props.error
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            null,
+	            " Check to make sure the code is correct!! "
 	          )
 	        );
 	      } else {

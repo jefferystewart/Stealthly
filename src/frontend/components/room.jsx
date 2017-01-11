@@ -107,8 +107,9 @@ class Room extends React.Component {
     window.state = this.state;
     if (this.props.error){
       return(
-        <div className="room">
-          <h3>{ this.props.error }</h3>
+        <div className="page-header text-center">
+          <h1>{ this.props.error }</h1>
+          <p> Check to make sure the code is correct!! </p>
         </div>
       );
     }else {
