@@ -147,7 +147,7 @@ class Room extends React.Component {
         <div>
           <div className="room-header text-center">
             <h1> Room: { this.props.code }</h1>
-            <p> Share your code with your fellow spys and talk in secret! (http://localhost:3000/{this.props.code}) </p>
+            <p> Share <strong>http://localhost:3000/{this.props.code}</strong> with your fellow spys and talk in secret! </p>
           </div>
           <div>
             <div className="col-xs-12 text-center chat">

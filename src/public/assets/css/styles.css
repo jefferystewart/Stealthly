@@ -19,6 +19,7 @@
 }
 
 
+
 .form-group label, .form-group button,  .form-group input {
 	font-size:26px;
 }
@@ -47,6 +48,19 @@
 	border-bottom: 1px solid #eee;
 }
 
+.room-header h1 {
+	font-size:  80px;
+}
+
+.room-header p {
+	font-size:  22px;
+}
+
+.room-header p strong {
+	font-style: italic;
+}
+
+
 .chat-item {
 	border:none;
 	padding: 2px 5px;
@@ -61,9 +75,18 @@ textarea {
 .chat-box {
 }
 
+.list-group {
+	background: black;
+}
+
+.list-group li {
+	background: black;
+	font-size: 22px;
+}
+
 .messages {
 	overflow: auto;
-	height: calc(100% - 200px);
+	height: calc(100% - 240px);
 }
 
 ::-webkit-scrollbar {
@@ -129,4 +152,8 @@ textarea {
 	display: inline-block;
 	height: 100%;
 	vertical-align: middle;
+}
+
+.form-control {
+	font-size: 26px;
 }

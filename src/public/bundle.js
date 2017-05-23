@@ -29139,9 +29139,14 @@
 	            _react2.default.createElement(
 	              "p",
 	              null,
-	              " Share your code with your fellow spys and talk in secret! (http://localhost:3000/",
-	              this.props.code,
-	              ") "
+	              " Share ",
+	              _react2.default.createElement(
+	                "strong",
+	                null,
+	                "http://localhost:3000/",
+	                this.props.code
+	              ),
+	              " with your fellow spys and talk in secret! "
 	            )
 	          ),
 	          _react2.default.createElement(
