@@ -1,14 +1,40 @@
 
+ body {
+	 font-family: 'VT323', monospace;
+	 background: black;
+	 color:lightgreen;
+ }
+
 .error{
 	color:red;
 }
 
-.logo {
-	margin-bottom: 10px;
+.alert {
+	font-size:26px;
+	color:red;
+	padding: 0;
+	margin: 5px;
+	background: black;
+	border: none;
+}
+
+
+.form-group label, .form-group button,  .form-group input {
+	font-size:26px;
+}
+
+.form-group button {
+	margin-right: 10px;
+	background: black;
+	color:lightgreen;
 }
 
 .page-header p {
-	font-size:  16px;
+	font-size:  22px;
+}
+
+.page-header h1 {
+	font-size:  80px;
 }
 
 .menu-btn {

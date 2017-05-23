@@ -28696,7 +28696,11 @@
 	        _react2.default.createElement(
 	          "div",
 	          { className: "page-header text-center" },
-	          _react2.default.createElement("img", { src: "/assets/images/logo.png", className: "logo" }),
+	          _react2.default.createElement(
+	            "h1",
+	            null,
+	            "STEALHLY"
+	          ),
 	          _react2.default.createElement(
 	            "p",
 	            null,

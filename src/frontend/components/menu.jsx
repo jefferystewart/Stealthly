@@ -55,7 +55,7 @@ class Menu extends React.Component {
     return (
       <div className="container text-center col-xs-12 col-sm-8 col-sm-offset-2">
         <div className="page-header text-center">
-          <img src="/assets/images/logo.png" className="logo"></img>
+          <h1>STEALHLY</h1>
           <p>Create a room and share the code with your fellow stealthy friends! Or if someone gives you a code, join the room!</p>
         </div>
         <div className="form-group">
