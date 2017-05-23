@@ -1,7 +1,5 @@
 var path = require("path");
 
-console.log(__dirname);
-
 module.exports = {
   context: __dirname,
   entry: __dirname + "/src/frontend/app.jsx",

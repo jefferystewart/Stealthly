@@ -3,6 +3,14 @@
 	color:red;
 }
 
+.logo {
+	margin-bottom: 10px;
+}
+
+.page-header p {
+	font-size:  16px;
+}
+
 .menu-btn {
 	background-color: #b2d8e8;
 	display: block;
@@ -29,7 +37,7 @@ textarea {
 
 .messages {
 	overflow: auto;
-	height: calc(100% - 270px);
+	height: calc(100% - 200px);
 }
 
 ::-webkit-scrollbar {

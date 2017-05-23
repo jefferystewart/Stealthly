@@ -134,7 +134,7 @@ class Room extends React.Component {
       } else{
         nicknameContainer =
           <form className="form-group" onSubmit={ this.submitNickname.bind(this) }>
-            <label htmlFor="nameinput">Choose a nickname!</label>
+            <label htmlFor="nameinput">Choose a codename!</label>
             <div className="input-group">
               <input className= "form-control" type="text" id="nameinput" onChange={ this.updateNickname.bind(this) } />
               <span className="input-group-btn">
@@ -147,19 +147,17 @@ class Room extends React.Component {
         <div>
           <div className="room-header text-center">
             <h1> Room: { this.props.code }</h1>
-            <p> Share your code with your friends and have a ball! </p>
+            <p> Share your code with your fellow spys and talk in secret! (http://localhost:3000/{this.props.code}) </p>
           </div>
           <div>
-            <div className="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center">
-            </div>
-            <div className="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center chat">
+            <div className="col-xs-12 text-center chat">
               { nicknameContainer }
               <ul id="messages" className="list-group text-left messages">
                 { this.state.log }
               </ul>
               <div className="chat-box">
-                { textContainer }
                 { gifContainer }
+                { textContainer }
               </div>
             </div>
           </div>

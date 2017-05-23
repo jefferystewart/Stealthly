@@ -28696,20 +28696,11 @@
 	        _react2.default.createElement(
 	          "div",
 	          { className: "page-header text-center" },
-	          _react2.default.createElement(
-	            "h1",
-	            null,
-	            "QUIPSMASH"
-	          ),
+	          _react2.default.createElement("img", { src: "/assets/images/logo.png", className: "logo" }),
 	          _react2.default.createElement(
 	            "p",
 	            null,
-	            "Create a room and share the code with your friends!"
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            null,
-	            "If a friend gives you a code, join the room!"
+	            "Create a room and share the code with your fellow stealthy friends! Or if someone gives you a code, join the room!"
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -28729,7 +28720,7 @@
 	          _react2.default.createElement(
 	            "label",
 	            { htmlFor: "nameinput" },
-	            "Nickname"
+	            "Codename"
 	          ),
 	          nicknameError,
 	          _react2.default.createElement("input", { className: "form-control input-lg button", id: "nameinput", onChange: this.updateNickname.bind(this) })
@@ -29111,7 +29102,7 @@
 	            _react2.default.createElement(
 	              "label",
 	              { htmlFor: "nameinput" },
-	              "Choose a nickname!"
+	              "Choose a codename!"
 	            ),
 	            _react2.default.createElement(
 	              "div",
@@ -29144,16 +29135,17 @@
 	            _react2.default.createElement(
 	              "p",
 	              null,
-	              " Share your code with your friends and have a ball! "
+	              " Share your code with your fellow spys and talk in secret! (http://localhost:3000/",
+	              this.props.code,
+	              ") "
 	            )
 	          ),
 	          _react2.default.createElement(
 	            "div",
 	            null,
-	            _react2.default.createElement("div", { className: "col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center" }),
 	            _react2.default.createElement(
 	              "div",
-	              { className: "col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-0 text-center chat" },
+	              { className: "col-xs-12 text-center chat" },
 	              nicknameContainer,
 	              _react2.default.createElement(
 	                "ul",
@@ -29163,8 +29155,8 @@
 	              _react2.default.createElement(
 	                "div",
 	                { className: "chat-box" },
-	                textContainer,
-	                gifContainer
+	                gifContainer,
+	                textContainer
 	              )
 	            )
 	          )

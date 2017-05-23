@@ -55,9 +55,8 @@ class Menu extends React.Component {
     return (
       <div className="container text-center col-xs-12 col-sm-8 col-sm-offset-2">
         <div className="page-header text-center">
-          <h1>QUIPSMASH</h1>
-          <p>Create a room and share the code with your friends!</p>
-          <p>If a friend gives you a code, join the room!</p>
+          <img src="/assets/images/logo.png" className="logo"></img>
+          <p>Create a room and share the code with your fellow stealthy friends! Or if someone gives you a code, join the room!</p>
         </div>
         <div className="form-group">
           <label htmlFor="roominput">Room Code</label>
@@ -65,7 +64,7 @@ class Menu extends React.Component {
           <input className="form-control input-lg button" id="roominput" onChange={ this.updateCode.bind(this) }></input>
         </div>
         <div className="form-group">
-          <label htmlFor="nameinput">Nickname</label>
+          <label htmlFor="nameinput">Codename</label>
           { nicknameError }
           <input className="form-control input-lg button" id="nameinput" onChange={ this.updateNickname.bind(this) }></input>
         </div>
