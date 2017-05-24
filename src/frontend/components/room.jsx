@@ -94,7 +94,7 @@ class Room extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    
+
     var textBytes = aesjs.utils.utf8.toBytes(this.state.message);
     var aesCtr = new aesjs.ModeOfOperation.ctr(KEY, new aesjs.Counter(5));
     var encryptedBytes = aesCtr.encrypt(textBytes);
@@ -163,8 +163,8 @@ class Room extends React.Component {
       return (
         <div>
           <div className="room-header text-center">
-            <h1> Room: { this.props.code }</h1>
-            <p> Share <strong>http://localhost:3000/{this.props.code}</strong> with your fellow spys and talk in secret! </p>
+            <h1>Room: { this.props.code }</h1>
+            <p>Share <strong>stealthly.herokuapp.com/{this.props.code}</strong> with your fellow spys and talk in secret! </p>
           </div>
           <div>
             <div className="col-xs-12 text-center chat">

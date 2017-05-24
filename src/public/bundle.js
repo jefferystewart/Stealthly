@@ -29157,17 +29157,17 @@
 	            _react2.default.createElement(
 	              "h1",
 	              null,
-	              " Room: ",
+	              "Room: ",
 	              this.props.code
 	            ),
 	            _react2.default.createElement(
 	              "p",
 	              null,
-	              " Share ",
+	              "Share ",
 	              _react2.default.createElement(
 	                "strong",
 	                null,
-	                "http://localhost:3000/",
+	                "stealthly.herokuapp.com/",
 	                this.props.code
 	              ),
 	              " with your fellow spys and talk in secret! "
