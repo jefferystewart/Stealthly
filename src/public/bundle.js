@@ -29130,7 +29130,7 @@
 	            _react2.default.createElement(
 	              "label",
 	              { htmlFor: "nameinput" },
-	              "Choose a codename!"
+	              "Choose your secret codename!"
 	            ),
 	            _react2.default.createElement(
 	              "div",

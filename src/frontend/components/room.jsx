@@ -151,7 +151,7 @@ class Room extends React.Component {
       } else{
         nicknameContainer =
           <form className="form-group" onSubmit={ this.submitNickname.bind(this) }>
-            <label htmlFor="nameinput">Choose a codename!</label>
+            <label htmlFor="nameinput">Choose your secret codename!</label>
             <div className="input-group">
               <input className= "form-control" type="text" id="nameinput" onChange={ this.updateNickname.bind(this) } />
               <span className="input-group-btn">
