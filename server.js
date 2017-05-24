@@ -11,6 +11,8 @@ const io = require('socket.io')(http);
 const db = require('./config/db');
 
 let dbUrl = process.env.MLAB_URL || db.url;
+console.log('hellllllllllo');
+console.log(dbUrl);
 // Connect to the DB
 mongoose.connect(dbUrl);
 app.use(express.static(__dirname + '/src/public'));
