@@ -67,7 +67,7 @@
 input[type='text'],
 input[type='number'],
 textarea {
-  font-size: 16px;
+  font-size: 26px;
 }
 
 .chat-box {
@@ -153,5 +153,5 @@ textarea {
 }
 
 .form-control {
-	font-size: 26px;
+  height: auto;
 }
