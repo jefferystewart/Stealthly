@@ -2,7 +2,7 @@
 
 [LIVE SITE](https://jnico810.github.io/pipe_mania/)
 
-[main]: ./src/public/assets/images/main.tiff
+[main]: ./src/public/assets/images/main.png
 
 ![main]
 
