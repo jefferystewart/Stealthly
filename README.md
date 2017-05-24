@@ -1,6 +1,6 @@
 ## Stealthly: Your new best friend
 
-[LIVE SITE](https://jnico810.github.io/pipe_mania/)
+[Click for live site!](stealthly.herokuapp.com)
 
 [main]: ./src/public/assets/images/main.png
 
