@@ -1,6 +1,6 @@
 ## Stealthly: Your new best friend
 
-[Click for live site!](stealthly.herokuapp.com)
+[Click for live site!](http://stealthly.herokuapp.com)
 
 [main]: ./src/public/assets/images/main.png
 
