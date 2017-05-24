@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const randomstring = require("randomstring");
+
 const stringOptions = {
 	length: 4,
 	charset: 'alphabetic',
@@ -16,7 +17,6 @@ var RoomSchema = new Schema ({
 
 RoomSchema.statics.generateCode = function(host, cb){
 	let randomString = randomstring.generate(stringOptions);
-
 	const countFunc = function (err, count){
     if(count > 0){
 			let randomString = randomstring.generate(stringOptions);
@@ -30,6 +30,5 @@ RoomSchema.statics.generateCode = function(host, cb){
 	}.bind(this);
 	this.count({code: randomString}, countFunc);
 };
-
 
 module.exports = mongoose.model('Room', RoomSchema);

@@ -10,9 +10,7 @@ const io = require('socket.io')(http);
 // Configs
 const db = require('./config/db');
 
-
 let dbUrl = process.env.MLAB_URL || db.url;
-console.log(dbUrl);
 // Connect to the DB
 mongoose.connect(dbUrl);
 app.use(express.static(__dirname + '/src/public'));
@@ -30,10 +28,7 @@ app.use(bodyParser.urlencoded({
 require('./app/routes/api')(app, io);
 require('./app/routes/routes')(app);
 
-var line_history = [];
-
 // Start the app with listen and a port number
-
 const port = process.env.PORT || 3000;
 
 http.listen(port, function(){
