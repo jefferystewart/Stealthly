@@ -57,6 +57,7 @@ class Menu extends React.Component {
         <div className="page-header text-center">
           <h1>STEALHLY</h1>
           <p>Create a room and share the code with your fellow stealthy friends! Or if someone gives you a code, join the room!</p>
+          <p>Stealthy uses AES Encryption to ensure that all your chats are super duper uber private! Stealthy also never stores your messages!!</p>
         </div>
         <div className="form-group">
           <label htmlFor="roominput">Room Code</label>

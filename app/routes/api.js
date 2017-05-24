@@ -23,12 +23,10 @@ module.exports = function(app, io) {
 				    nsp.emit('user-connect', nickname);
 				  });
 					socket.on('chat message', (msg, nickname) => {
-				    // console.log('message: ' + msg + ', nickname: ' + nickname);
 						nsp.emit('chat message', msg, nickname);
 				  });
 					socket.on('chat gif', (gif, nickname) => {
 						console.log(gif);
-				    // console.log('message: ' + msg + ', nickname: ' + nickname);
 						nsp.emit('chat gif', gif, nickname);
 				  });
 					socket.on('log chat message', (log) =>{

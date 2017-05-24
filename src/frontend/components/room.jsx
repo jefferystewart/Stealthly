@@ -1,6 +1,9 @@
 import React from "react";
 import $ from "jquery";
 import GifContainer from "./gif_container";
+import aesjs from "aes-js"
+
+const KEY = [136, 234, 39, 101, 114, 68, 62, 128, 174, 194, 201, 183, 193, 76,  76, 99];
 
 class Room extends React.Component {
 
@@ -45,12 +48,20 @@ class Room extends React.Component {
   }
 
   _setupSocket(socket) {
+
     if (this.props.nickname){
       socket.emit('user-connect', this.props.nickname);
     }
     socket.on('chat message', (msg, nickname) => {
+
+      var encryptedBytes = aesjs.utils.hex.toBytes(msg);
+      var aesCtr = new aesjs.ModeOfOperation.ctr(KEY, new aesjs.Counter(5));
+      var decryptedBytes = aesCtr.decrypt(encryptedBytes);
+
+      var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
+
       const newLog = this.state.log;
-      newLog.push(<li className="list-group-item chat-item" key={ this.state.log.length }><strong>{ nickname }</strong> : { msg }</li>);
+      newLog.push(<li className="list-group-item chat-item" key={ this.state.log.length }><strong>{ nickname }</strong> : { decryptedText }</li>);
       socket.emit('log chat message', newLog);
       this._scrollToBottom();
       this.setState({log:newLog});
@@ -83,7 +94,13 @@ class Room extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.state.socket.emit('chat message', this.state.message, this.props.nickname);
+    
+    var textBytes = aesjs.utils.utf8.toBytes(this.state.message);
+    var aesCtr = new aesjs.ModeOfOperation.ctr(KEY, new aesjs.Counter(5));
+    var encryptedBytes = aesCtr.encrypt(textBytes);
+    var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+
+    this.state.socket.emit('chat message', encryptedHex, this.props.nickname);
     this.setState({ message:'' });
     return false;
   }
